@@ -6,6 +6,9 @@ import {
     createDrawerNavigator
 } from 'react-navigation';
 import Login from '../containers/Login';
+import SignUp from '../containers/SignUp';
+import Home from '../containers/Home';
+import Auth from '../auth/Auth';
 
 
 
@@ -59,7 +62,25 @@ import Login from '../containers/Login';
 
 const Routing = createStackNavigator({
     HomeScreen: {
+        screen: Auth,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SignUpScreen: {
+        screen: SignUp,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SignInScreen: {
         screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+    WelcomeScreen: {
+        screen: Home,
         navigationOptions: {
             header: null
         }
