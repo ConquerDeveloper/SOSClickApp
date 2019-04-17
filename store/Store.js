@@ -28,9 +28,19 @@ const isAuthenticatedReducer = (state = false, action) => {
     }
 };
 
+const userInfoReducer = (state = null, action) => {
+    switch (action.type) {
+        case Constants.SAVE_USER_INFO:
+            return state = action.obj;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
+    userInfoReducer,
     form
 });
 

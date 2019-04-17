@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+    AsyncStorage
+} from 'react-native';
 import LoginView from '../components/LoginView';
 import {connect} from 'react-redux';
 import {
@@ -15,14 +18,24 @@ class Login extends React.Component {
         };
     }
 
-    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+    async componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
         if (prevProps.isAuthenticated !== this.props.isAuthenticated) {
             const {navigation} = this.props;
-            const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({routeName: 'WelcomeScreen'})],
-            });
-            navigation.dispatch(resetAction);
+            const firstSession = await AsyncStorage.getItem('firstSession');
+            if (firstSession === null) {
+                AsyncStorage.setItem('firstSession');
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({routeName: 'OnBoardingScreen'})],
+                });
+                navigation.dispatch(resetAction);
+            } else {
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({routeName: 'WelcomeScreen'})],
+                });
+                navigation.dispatch(resetAction);
+            }
         }
     }
 

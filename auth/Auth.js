@@ -24,11 +24,13 @@ class Auth extends React.Component {
         if (AuthToken !== null) {
             this.props.handleAuthentication(true);
             this.setState({loading: false});
+            AsyncStorage.setItem('firstSession');
             const resetAction = StackActions.reset({
                 index: 0,
                 actions: [NavigationActions.navigate({routeName: 'WelcomeScreen'})],
             });
             navigation.dispatch(resetAction);
+
         } else {
             this.props.handleAuthentication(false);
             this.setState({loading: false});
@@ -42,7 +44,7 @@ class Auth extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <ActivityIndicator size="large" color="#0000ff" style={StyleSheet.absoluteFillObject} />
+            return <ActivityIndicator size="large" color="#0000ff" style={StyleSheet.absoluteFillObject}/>
         } else {
             return null;
         }

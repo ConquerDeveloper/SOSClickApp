@@ -39,6 +39,18 @@ export const generalStyles = StyleSheet.create({
         borderRadius: 10,
         height: 45
     },
+    headerContainer: {
+        backgroundColor: '#D0282E'
+    },
+    headerTitle: {
+        textAlign: 'center',
+        fontFamily: 'UniSansBold'
+    },
+    headerTitleLight: {
+        fontFamily: 'UniSansLight',
+        color: '#fff',
+        fontSize: 20
+    }
 });
 
 export const loginStyles = StyleSheet.create({
@@ -107,5 +119,56 @@ export const signUpStyles = StyleSheet.create({
         paddingRight: 30,
         paddingLeft: 30,
         marginTop: -40
+    }
+});
+
+export const footerStyles = StyleSheet.create({
+    background: {
+        backgroundColor: '#EDEDED'
+    },
+    footerText: {
+        color: '#92A0B1',
+        fontFamily: 'UniSansRegular',
+        fontSize: 10
+    },
+    icon: {
+        fontSize: 30,
+        color: '#92A0B1'
+    },
+    iconImg: {
+        width: 30,
+        height: 30
+    }
+});
+
+export const homeStyles = StyleSheet.create({
+    imageBackground: {
+        flex: 1,
+        width: undefined,
+        height: 220,
+        resizeMode: 'cover'
+    }
+});
+
+export const menuStyles = StyleSheet.create({
+    menuHeader: {
+        width: undefined,
+        height: 213,
+        backgroundColor: '#D0282E'
+    },
+    username: {
+        fontSize: 25,
+        fontFamily: 'UniSansBold'
+    },
+    email: {
+        fontFamily: 'UniSansRegular',
+        fontSize: 12,
+        color: '#fff'
+    },
+    avatar: {
+        width: 115,
+        height: 115,
+        borderRadius: 115 / 2,
+        marginBottom: 10
     }
 });

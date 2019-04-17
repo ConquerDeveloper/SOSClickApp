@@ -9,18 +9,14 @@ import Login from '../containers/Login';
 import SignUp from '../containers/SignUp';
 import Home from '../containers/Home';
 import Auth from '../auth/Auth';
+import OnBoardingIntro from "../includes/OnBoardingIntro";
+import FooterView from '../includes/FooterView';
+import CustomDrawerContentComponent from '../includes/CustomDrawerContentComponent';
+import logOut from '../containers/logOut';
 
-
-
-/*const MyDrawerNavigator = createDrawerNavigator({
+const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
             screen: Home,
-            navigationOptions: {
-                header: null
-            }
-        },
-        NotificationsScreen: {
-            screen: Notifications,
             navigationOptions: {
                 header: null
             }
@@ -31,25 +27,13 @@ import Auth from '../auth/Auth';
             return <CustomDrawerContentComponent navigation={props.navigation}/>
         }
     }
-);*/
+);
 
-/*const Tab = createBottomTabNavigator({
+const Tab = createBottomTabNavigator({
     WelcomeScreen: {
         screen: MyDrawerNavigator,
         navigationOptions: {
             tabBarAccessibilityLabel: 'home'
-        }
-    },
-    MonitorScreen: {
-        screen: Monitor,
-        navigationOptions: {
-            tabBarAccessibilityLabel: 'monitor'
-        }
-    },
-    NotificationsScreen: {
-        screen: Notifications,
-        navigationOptions: {
-            tabBarAccessibilityLabel: 'notifications'
         }
     }
 }, {
@@ -57,8 +41,7 @@ import Auth from '../auth/Auth';
     tabBarComponent: props => {
         return <FooterView navigation={props.navigation}/>
     },
-});*/
-
+});
 
 const Routing = createStackNavigator({
     HomeScreen: {
@@ -80,7 +63,19 @@ const Routing = createStackNavigator({
         }
     },
     WelcomeScreen: {
-        screen: Home,
+        screen: Tab,
+        navigationOptions: {
+            header: null
+        }
+    },
+    OnBoardingScreen: {
+        screen: OnBoardingIntro,
+        navigationOptions: {
+            header: null
+        }
+    },
+    logOutScreen: {
+        screen: logOut,
         navigationOptions: {
             header: null
         }
