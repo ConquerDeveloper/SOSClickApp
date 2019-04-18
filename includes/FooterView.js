@@ -12,16 +12,21 @@ import {
 import {footerStyles} from '../includes/styles';
 
 const FooterView = props => {
+    const {
+        navigation
+    } = props;
     return (
         <Footer>
             <FooterTab style={footerStyles.background}>
-                <Button vertical>
+                <Button vertical
+                        onPress={() => navigation.navigate('WelcomeScreen')}>
                     <Icon name="home"
                           style={footerStyles.icon}
                     />
                     <Text style={footerStyles.footerText}>INICIO</Text>
                 </Button>
-                <Button vertical>
+                <Button vertical
+                        onPress={() => navigation.navigate('BroadcastScreen')}>
                     <Image source={require('../assets/img/broadcast-icon.png')}
                            style={footerStyles.iconImg}/>
                     <Text style={footerStyles.footerText}>TRANSMITIR</Text>

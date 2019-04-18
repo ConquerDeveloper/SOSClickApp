@@ -13,6 +13,7 @@ import OnBoardingIntro from "../includes/OnBoardingIntro";
 import FooterView from '../includes/FooterView';
 import CustomDrawerContentComponent from '../includes/CustomDrawerContentComponent';
 import logOut from '../containers/logOut';
+import Broadcast from '../containers/Broadcast';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -35,7 +36,13 @@ const Tab = createBottomTabNavigator({
         navigationOptions: {
             tabBarAccessibilityLabel: 'home'
         }
-    }
+    },
+    BroadcastScreen: {
+        screen: Broadcast,
+        navigationOptions: {
+            tabBarAccessibilityLabel: 'home'
+        }
+    },
 }, {
     tabBarPosition: 'bottom',
     tabBarComponent: props => {

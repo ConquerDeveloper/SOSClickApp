@@ -37,7 +37,6 @@ const HomeView = props => {
             </Header>
             <ImageBackground style={homeStyles.imageBackground}
                              source={require('../assets/img/home-background.png')}>
-
             </ImageBackground>
         </Container>
     )
