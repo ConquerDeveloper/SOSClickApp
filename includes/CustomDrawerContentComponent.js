@@ -19,15 +19,22 @@ const {width} = Dimensions.get('window');
 const CustomDrawerContentComponent = props => {
     const {
         userInfo,
-        navigation
+        navigation,
+        userPhoto
     } = props;
-    console.log('sera', userInfo);
+    console.log('sera', userPhoto);
     return (
         <Container style={{flex: 1, backgroundColor: '#F5F8FA'}}>
             <View style={menuStyles.menuHeader}>
                 <View style={generalStyles.columnCenteredContainer}>
-                    <Image source={require('../assets/img/user-avatar.png')}
-                           style={menuStyles.avatar}/>
+                    {
+                        userPhoto && <Image source={{uri: userPhoto}}
+                                            style={menuStyles.avatar}/>
+                    }
+                    {
+                        !userPhoto && <Image source={require('../assets/img/user-avatar.png')}
+                                             style={menuStyles.avatar}/>
+                    }
                     <Title style={menuStyles.username}>{userInfo && `${userInfo.usuario.nombre}`}</Title>
                     <Text style={menuStyles.email}>{userInfo && `${userInfo.usuario.email}`}</Text>
                 </View>
@@ -147,7 +154,8 @@ const CustomDrawerContentComponent = props => {
 };
 
 const mapStateToProps = state => ({
-    userInfo: state.userInfoReducer
+    userInfo: state.userInfoReducer,
+    userPhoto: state.userPhotoReducer
 });
 
 export default connect(mapStateToProps)(CustomDrawerContentComponent);

@@ -57,7 +57,27 @@ const goBackReducer = (state = false, action) => {
         default:
             return state;
     }
-}
+};
+
+const userPhotoReducer = (state = null, action) => {
+    switch (action.type) {
+        case Constants.SAVE_PHOTO:
+            return state = action.photo;
+        default:
+            return state;
+    }
+};
+
+const toggleModalReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.OPEN_MODAL:
+            return state = true;
+        case Constants.CLOSE_MODAL:
+            return state = false;
+        default:
+            return state;
+    }
+};
 
 const reducers = combineReducers({
     spinnerReducer,
@@ -65,6 +85,8 @@ const reducers = combineReducers({
     userInfoReducer,
     contactsReducer,
     goBackReducer,
+    userPhotoReducer,
+    toggleModalReducer,
     form
 });
 

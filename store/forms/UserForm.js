@@ -90,7 +90,8 @@ let UserForm = props => {
                    component={formField}
             />
             <Text style={generalStyles.label}>Contraseña</Text>
-            <TouchableOpacity style={{
+            <TouchableOpacity onPress={props.openModalChangePassword}
+                style={{
                 height: 40,
                 borderRadius: 5,
                 backgroundColor: '#F6F8FA'

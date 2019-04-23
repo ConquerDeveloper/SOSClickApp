@@ -17,8 +17,10 @@ import {
     isAuthenticated,
     saveUserInfoAction,
     userInfoAction,
-    goBackAction
+    goBackAction,
+    saveUserPhotoAction
 } from "../Actions";
+import ImagePicker from 'react-native-image-crop-picker';
 
 const signUp = async info => {
     const response = await fetch(Constants.SIGN_UP_API, {
@@ -152,6 +154,7 @@ function* sagaLoadUserInfo() {
         switch (status) {
             case 200:
                 yield put(saveUserInfoAction(response));
+                yield put(saveUserPhotoAction(response.usuario.foto_perfil));
                 break;
         }
     } catch (e) {
@@ -277,10 +280,82 @@ function* sagaEditUser(info) {
     yield put(spinnerAction(false));
 }
 
+const openGallery = async requestType => {
+    let image = '';
+    switch (requestType) {
+        case 'gallery':
+            image = await ImagePicker.openPicker({
+                cropping: true
+            });
+            break;
+        case 'camera':
+            image = await ImagePicker.openCamera({
+                cropping: true
+            });
+            break;
+    }
+    const path = image.path.split('/'),
+        fileName = [...path].pop();
+    const foto = {
+        uri: image.path,
+        type: image.mime,
+        name: fileName
+    };
+    const formData = new FormData();
+    formData.append('upload_preset', Constants.CLOUDINARY_PRESET);
+    formData.append('file', foto);
+    const response = await fetch(Constants.CLOUDINARY_NAME, {
+        headers: {
+            'Accept': 'application/x-www-form-urlencoded',
+            'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        body: formData
+    });
+    const cloudinaryResponse = await response.json();
+    const token = await AsyncStorage.getItem('token');
+    const apiResponse = await fetch(Constants.UPDATE_PHOTO_API, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': token
+        },
+        body: JSON.stringify({
+            foto_perfil: cloudinaryResponse.secure_url
+        })
+    });
+    return Promise.all([{status: await apiResponse.status, response: await apiResponse.json(), img: cloudinaryResponse.secure_url}]);
+};
+
+function* sagaOpenGallery(item) {
+    yield put(spinnerAction(true));
+    try {
+        const {requestType} = item;
+        const result = yield call(openGallery, requestType);
+        console.log('result', result);
+        const {status, response, img} = result[0];
+        switch (status) {
+            case 200:
+                Toast.show({
+                    text: response.message,
+                    buttonText: 'OK'
+                });
+                yield put(saveUserPhotoAction(img));
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
     yield takeEvery(Constants.SIGN_IN, sagaSignIn);
     yield takeEvery(Constants.USER_INFO_LOAD, sagaLoadUserInfo);
     yield takeEvery(Constants.LOG_OUT, sagaLogOut);
     yield takeEvery(Constants.EDIT_USER, sagaEditUser);
+    yield takeEvery(Constants.OPEN_GALLERY, sagaOpenGallery);
 }

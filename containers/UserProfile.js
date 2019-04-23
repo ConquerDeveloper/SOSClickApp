@@ -1,7 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import UserProfileView from '../components/UserProfileView';
-import {editUserAction, goBackAction} from "../store/Actions";
+import {
+    editUserAction,
+    goBackAction,
+    openGalleryAction,
+    toggleModalAction
+} from "../store/Actions";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -18,11 +23,18 @@ class UserProfile extends React.Component {
     render() {
         const {
             navigation,
-            spinner
+            spinner,
+            userPhoto,
+            isModalVisible
         } = this.props;
         return <UserProfileView navigation={navigation}
                                 spinner={spinner}
+                                userPhoto={userPhoto}
+                                isModalVisible={isModalVisible}
                                 handleUserSubmit={this.props.handleUserSubmit}
+                                handleOpenGallery={this.props.handleOpenGallery}
+                                openModalChangePassword={() => this.props.handleToggleModal(true)}
+                                hideModalChangePassword={() => this.props.handleToggleModal(false)}
         />
     }
 
@@ -37,12 +49,20 @@ const mapDispatchToProps = dispatch => ({
     },
     handleGoBack: bool => {
         dispatch(goBackAction(bool));
+    },
+    handleOpenGallery: (requestType) => {
+        dispatch(openGalleryAction(requestType));
+    },
+    handleToggleModal: bool => {
+        dispatch(toggleModalAction(bool));
     }
 });
 
 const mapStateToProps = state => ({
     spinner: state.spinnerReducer,
-    goBack: state.goBackReducer
+    goBack: state.goBackReducer,
+    userPhoto: state.userPhotoReducer,
+    isModalVisible: state.toggleModalReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

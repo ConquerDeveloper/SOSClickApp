@@ -48,3 +48,17 @@ export const editUserAction = obj => ({
 export const goBackAction = bool => ({
     type: bool ? Constants.GO_BACK_TRUE : Constants.GO_BACK_FALSE
 });
+
+export const openGalleryAction = requestType => ({
+    type: Constants.OPEN_GALLERY,
+    requestType
+});
+
+export const saveUserPhotoAction = photo => ({
+    type: Constants.SAVE_PHOTO,
+    photo
+});
+
+export const toggleModalAction = bool => ({
+    type: bool ? Constants.OPEN_MODAL : Constants.CLOSE_MODAL,
+});
