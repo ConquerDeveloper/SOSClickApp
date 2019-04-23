@@ -44,7 +44,7 @@ const SignUpForm = props => {
     const {navigation} = props;
     return (
         <Form style={signUpStyles.signUpForm}>
-            <Field name='name'
+            <Field name='nombre'
                    placeholder='Nombre'
                    autocapitalize='words'
                    keyboardtype='none'

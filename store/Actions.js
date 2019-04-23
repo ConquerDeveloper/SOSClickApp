@@ -30,3 +30,12 @@ export const saveUserInfoAction = obj => ({
 export const logOutAction = () => ({
     type: Constants.LOG_OUT
 });
+
+export const saveContactsAction = array => ({
+    type: Constants.SAVE_CONTACTS,
+    array
+});
+
+export const cleanContactsAction = () => ({
+    type: Constants.CLEAN_CONTACTS
+});

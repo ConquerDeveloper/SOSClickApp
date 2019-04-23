@@ -37,10 +37,22 @@ const userInfoReducer = (state = null, action) => {
     }
 };
 
+const contactsReducer = (state = [], action) => {
+    switch (action.type) {
+        case Constants.SAVE_CONTACTS:
+            return state = action.array;
+        case Constants.CLEAN_CONTACTS:
+            return state = [];
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
     userInfoReducer,
+    contactsReducer,
     form
 });
 

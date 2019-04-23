@@ -38,6 +38,7 @@ function* sagaSignUp(data) {
         const {info} = data;
         const result = yield call(signUp, info);
         const {status, response: {errors}} = result[0];
+        console.log('result', result);
         switch (status) {
             case 201:
                 Toast.show({
@@ -63,7 +64,7 @@ function* sagaSignUp(data) {
                     }
                     if (errors.name) {
                         Toast.show({
-                            text: errors.name[0],
+                            text: errors.nombre[0],
                             buttonText: 'OK'
                         });
                     }

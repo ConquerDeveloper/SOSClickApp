@@ -66,7 +66,45 @@ class Broadcast extends React.Component {
                                            bottom: 0,
                                            right: 0,
                                            zIndex: -1
-                                       }}/>
+                                       }}>
+                    <View style={{
+                        alignItems: 'space-between',
+                        justifyContent: 'flex-end',
+                        flex: 1,
+                        alignSelf: 'center',
+                        flexDirection: 'row'
+                    }}>
+                        <TouchableOpacity onPress={() => this.myBroadcasterRef.startBroadcast()}
+                                          style={{
+                                              marginBottom: 50,
+                                              width: 100,
+                                              height: 100,
+                                              backgroundColor: '#09f'
+                                          }}>
+                            <Text>INICIAR</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.stopBroadcastNow}
+                                          style={{
+                                              marginTop: 5,
+                                              width: 100,
+                                              height: 100,
+                                              backgroundColor: 'red',
+                                              marginBottom: 50,
+                                          }}>
+                            <Text>Detener</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.myBroadcasterRef.switchCamera()}
+                                          style={{
+                                              marginTop: 5,
+                                              width: 100,
+                                              height: 100,
+                                              backgroundColor: 'green',
+                                              marginBottom: 50,
+                                          }}>
+                            <Text>Voltear cámara</Text>
+                        </TouchableOpacity>
+                    </View>
+                </RNBambuserBroadcaster>
                 <BlurView
                     style={{
                         position: "absolute",
@@ -119,44 +157,7 @@ class Broadcast extends React.Component {
                             </View>
                         </View>
                     </View>*/}
-                {/*<View style={{
-                        alignItems: 'space-between',
-                        justifyContent: 'flex-end',
-                        flex: 1,
-                        alignSelf: 'center',
-                        flexDirection: 'row'
-                    }}>
-                        <TouchableOpacity onPress={() => this.myBroadcasterRef.startBroadcast()}
-                                          style={{
-                                              marginBottom: 50,
-                                              width: 100,
-                                              height: 100,
-                                              backgroundColor: '#09f'
-                                          }}>
-                            <Text>INICIAR</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.stopBroadcastNow}
-                                          style={{
-                                              marginTop: 5,
-                                              width: 100,
-                                              height: 100,
-                                              backgroundColor: 'red',
-                                              marginBottom: 50,
-                                          }}>
-                            <Text>Detener</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.myBroadcasterRef.switchCamera()}
-                                          style={{
-                                              marginTop: 5,
-                                              width: 100,
-                                              height: 100,
-                                              backgroundColor: 'green',
-                                              marginBottom: 50,
-                                          }}>
-                            <Text>Voltear cámara</Text>
-                        </TouchableOpacity>
-                    </View>*/}
-                {/*      </RNBambuserBroadcaster>*/}
+
             </View>
         );
     }

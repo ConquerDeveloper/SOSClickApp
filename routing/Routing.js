@@ -14,6 +14,8 @@ import FooterView from '../includes/FooterView';
 import CustomDrawerContentComponent from '../includes/CustomDrawerContentComponent';
 import logOut from '../containers/logOut';
 import Broadcast from '../containers/Broadcast';
+import SecurityNetwork from '../containers/SecurityNetwork';
+import ContactsNetwork from '../containers/ContactsNetwork';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -83,6 +85,18 @@ const Routing = createStackNavigator({
     },
     logOutScreen: {
         screen: logOut,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SecurityNetworkScreen: {
+        screen: SecurityNetwork,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ContactsScreen: {
+        screen: ContactsNetwork,
         navigationOptions: {
             header: null
         }

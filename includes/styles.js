@@ -19,6 +19,13 @@ export const generalStyles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center'
     },
+    rowCenteredContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
     textWhite: {
         color: '#fff'
     },
@@ -55,7 +62,7 @@ export const generalStyles = StyleSheet.create({
 
 export const loginStyles = StyleSheet.create({
     loginContainer: {
-        backgroundColor: '#D0282E',
+        backgroundColor: '#D0282E'
     },
     logo: {
         width: 260,
@@ -76,7 +83,7 @@ export const loginStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, .6)',
         borderRadius: 10,
-        marginTop: 40
+        marginTop: 40,
     },
     signInText: {
         color: '#fff',
@@ -144,9 +151,12 @@ export const footerStyles = StyleSheet.create({
 export const homeStyles = StyleSheet.create({
     imageBackground: {
         flex: 1,
-        width: undefined,
-        height: 220,
-        resizeMode: 'cover'
+        width,
+        height: 200,
+        resizeMode: 'cover',
+        alignSelf: 'center',
+        zIndex: -1,
+        backgroundColor: '#F5F8FA'
     }
 });
 
@@ -170,5 +180,50 @@ export const menuStyles = StyleSheet.create({
         height: 115,
         borderRadius: 115 / 2,
         marginBottom: 10
+    }
+});
+
+export const securityNetworkStyles = StyleSheet.create({
+    container: {
+        backgroundColor: '#F5F8FA',
+        flex: 1,
+    },
+    logoContainer: {
+        width: 116,
+        height: 116,
+        borderRadius: 116 / 2,
+        backgroundColor: '#fff',
+        marginTop: 20,
+        alignSelf: 'center'
+    },
+    logo: {
+        width: 83,
+        height: 83
+    },
+    title: {
+        fontFamily: 'UniSansRegular',
+        color: '#606A75',
+        fontSize: 24,
+        textAlign: 'center',
+        width,
+        marginTop: 10,
+        alignSelf: 'center'
+    },
+    subtitle: {
+        fontFamily: 'UniSansRegular',
+        fontSize: 14,
+        color: '#92A0B1',
+        textAlign: 'center',
+        marginTop: 20
+    },
+    searchIcon: {
+        width: 20,
+        height: 20,
+        marginLeft: 15
+    },
+    listContacts: {
+        marginTop: 20,
+        paddingLeft: 0,
+        marginLeft: 0
     }
 });
