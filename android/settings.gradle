@@ -1,0 +1,13 @@
+rootProject.name = 'SOSClickApp'
+include ':react-native-image-crop-picker'
+project(':react-native-image-crop-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-crop-picker/android')
+include ':@react-native-community_blur'
+project(':@react-native-community_blur').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/blur/android')
+include ':react-native-bambuser-broadcaster'
+project(':react-native-bambuser-broadcaster').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-bambuser-broadcaster/android')
+include ':react-native-gesture-handler', ':libbambuser-0.9.17', ':libbambuser'
+project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
+include ':react-native-contacts'
+project(':react-native-contacts').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-contacts/android')
+
+include ':app'
