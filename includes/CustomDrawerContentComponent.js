@@ -21,20 +21,23 @@ const CustomDrawerContentComponent = props => {
         userInfo,
         navigation
     } = props;
+    console.log('sera', userInfo);
     return (
         <Container style={{flex: 1, backgroundColor: '#F5F8FA'}}>
             <View style={menuStyles.menuHeader}>
                 <View style={generalStyles.columnCenteredContainer}>
                     <Image source={require('../assets/img/user-avatar.png')}
                            style={menuStyles.avatar}/>
-                    <Title style={menuStyles.username}>{userInfo && `${userInfo.name}`}</Title>
-                    <Text style={menuStyles.email}>{userInfo && `${userInfo.email}`}</Text>
+                    <Title style={menuStyles.username}>{userInfo && `${userInfo.usuario.nombre}`}</Title>
+                    <Text style={menuStyles.email}>{userInfo && `${userInfo.usuario.email}`}</Text>
                 </View>
             </View>
             <View style={{
                 flex: 1
             }}>
-                <TouchableOpacity style={{paddingHorizontal: 20, paddingTop: 25}}>
+                <TouchableOpacity style={{paddingHorizontal: 20, paddingTop: 25}}
+                                  onPress={() => navigation.navigate('UserProfileScreen')}
+                >
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -69,7 +72,7 @@ const CustomDrawerContentComponent = props => {
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}>
-                        <Image source={require('../assets/img/security-network-icon.png')}
+                        <Image source={require('../assets/img/network-menu-icon.png')}
                                style={{
                                    width: 28,
                                    height: 28,

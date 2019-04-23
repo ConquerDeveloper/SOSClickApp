@@ -15,7 +15,9 @@ import Constants from '../../includes/Constants';
 import {
     spinnerAction,
     isAuthenticated,
-    saveUserInfoAction
+    saveUserInfoAction,
+    userInfoAction,
+    goBackAction
 } from "../Actions";
 
 const signUp = async info => {
@@ -40,7 +42,7 @@ function* sagaSignUp(data) {
         const {status, response: {errors}} = result[0];
         console.log('result', result);
         switch (status) {
-            case 201:
+            case 200:
                 Toast.show({
                     text: 'Usuario creado con éxito',
                     buttonText: 'OK'
@@ -187,9 +189,98 @@ function* sagaLogOut() {
     yield put(spinnerAction(false));
 }
 
+const editUser = async info => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.EDIT_USER_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            ...info
+        })
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}]);
+};
+
+function* sagaEditUser(info) {
+    yield put(spinnerAction(true));
+    try {
+        const {obj} = info;
+        const result = yield call(editUser, obj);
+        const userInfo = yield select(state => state.userInfoReducer);
+        console.warn(result);
+        const {status, response, response: {errors}} = result[0];
+        switch (status) {
+            case 200:
+                Toast.show({
+                    text: response.message,
+                    buttonText: 'OK'
+                });
+                yield put(userInfoAction({
+                    usuario: obj
+                }));
+                yield put(goBackAction(true));
+                break;
+            case 422:
+                if (errors) {
+                    if (errors.primer_apellido) {
+                        Toast.show({
+                            text: errors.primer_apellido[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.segundo_apellido) {
+                        Toast.show({
+                            text: errors.segundo_apellido[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.email) {
+                        Toast.show({
+                            text: errors.email[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.telefono_movil) {
+                        Toast.show({
+                            text: errors.telefono_movil[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.direccion) {
+                        Toast.show({
+                            text: errors.direccion[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.telefono_fijo) {
+                        Toast.show({
+                            text: errors.telefono_fijo[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.fecha_nacimiento) {
+                        Toast.show({
+                            text: errors.fecha_nacimiento[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                }
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
     yield takeEvery(Constants.SIGN_IN, sagaSignIn);
     yield takeEvery(Constants.USER_INFO_LOAD, sagaLoadUserInfo);
     yield takeEvery(Constants.LOG_OUT, sagaLogOut);
+    yield takeEvery(Constants.EDIT_USER, sagaEditUser);
 }

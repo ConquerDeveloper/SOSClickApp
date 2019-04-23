@@ -44,7 +44,7 @@ export const generalStyles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#fff',
         borderRadius: 10,
-        height: 45
+        height: 40
     },
     headerContainer: {
         backgroundColor: '#D0282E'
@@ -57,6 +57,11 @@ export const generalStyles = StyleSheet.create({
         fontFamily: 'UniSansLight',
         color: '#fff',
         fontSize: 20
+    },
+    label: {
+        fontFamily: 'UniSansRegular',
+        fontSize: 12,
+        color: '#3B5575'
     }
 });
 
@@ -225,5 +230,28 @@ export const securityNetworkStyles = StyleSheet.create({
         marginTop: 20,
         paddingLeft: 0,
         marginLeft: 0
+    }
+});
+
+export const userProfileStyles = StyleSheet.create({
+    header: {
+        width,
+        height: 125,
+        backgroundColor: '#F6F8FA'
+    },
+    photo: {
+        width: 78,
+        height: 78,
+        borderRadius: 9,
+        alignSelf: 'center'
+    },
+    photoText: {
+        fontFamily: 'UniSansRegular',
+        fontSize: 12,
+        color: '#3B5575',
+        marginTop: 5
+    },
+    formContainer: {
+        marginTop: 30
     }
 });

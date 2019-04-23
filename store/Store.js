@@ -48,11 +48,23 @@ const contactsReducer = (state = [], action) => {
     }
 };
 
+const goBackReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.GO_BACK_TRUE:
+            return state = true;
+        case Constants.GO_BACK_FALSE:
+            return state = false;
+        default:
+            return state;
+    }
+}
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
     userInfoReducer,
     contactsReducer,
+    goBackReducer,
     form
 });
 

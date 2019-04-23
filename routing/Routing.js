@@ -16,6 +16,7 @@ import logOut from '../containers/logOut';
 import Broadcast from '../containers/Broadcast';
 import SecurityNetwork from '../containers/SecurityNetwork';
 import ContactsNetwork from '../containers/ContactsNetwork';
+import UserProfile from '../containers/UserProfile';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -97,6 +98,12 @@ const Routing = createStackNavigator({
     },
     ContactsScreen: {
         screen: ContactsNetwork,
+        navigationOptions: {
+            header: null
+        }
+    },
+    UserProfileScreen: {
+        screen: UserProfile,
         navigationOptions: {
             header: null
         }

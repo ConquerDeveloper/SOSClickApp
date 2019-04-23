@@ -39,3 +39,12 @@ export const saveContactsAction = array => ({
 export const cleanContactsAction = () => ({
     type: Constants.CLEAN_CONTACTS
 });
+
+export const editUserAction = obj => ({
+    type: Constants.EDIT_USER,
+    obj
+});
+
+export const goBackAction = bool => ({
+    type: bool ? Constants.GO_BACK_TRUE : Constants.GO_BACK_FALSE
+});
