@@ -1,8 +1,12 @@
-package com.sosclickapp;
+package com.naturalphone.sosclick;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.bambuserbroadcaster.BambuserBroadcasterViewPackage;
@@ -28,11 +32,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new PickerPackage(),
             new BlurViewPackage(),
             new BambuserBroadcasterViewPackage(),
             new RNGestureHandlerPackage(),
-            new ReactNativeContacts()
+            new ReactNativeContacts(),
+            new RNFirebaseNotificationsPackage(),
+            new RNFirebaseMessagingPackage(),
+            new RNFirebaseDatabasePackage()
       );
     }
 

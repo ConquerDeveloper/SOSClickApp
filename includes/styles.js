@@ -62,6 +62,12 @@ export const generalStyles = StyleSheet.create({
         fontFamily: 'UniSansRegular',
         fontSize: 12,
         color: '#3B5575'
+    },
+    forgotPasswordBackground: {
+        flex: 1,
+        width: undefined,
+        height: 350,
+        resizeMode: 'cover'
     }
 });
 
@@ -253,5 +259,37 @@ export const userProfileStyles = StyleSheet.create({
     },
     formContainer: {
         marginTop: 30
+    }
+});
+
+export const BroadcastingStyles = StyleSheet.create({
+    disconnect: {
+        width: 104,
+        height: 26,
+        borderRadius: 34,
+        borderWidth: 1,
+        borderColor: '#fff'
+    },
+    disconnectText: {
+        fontFamily: 'UniSansRegular',
+        color: '#fff',
+        fontSize: 14
+    },
+    bambuserContainer: {
+        width,
+        height,
+        ...StyleSheet.absoluteFillObject,
+        zIndex: -1
+    },
+    buttonContainer: {
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingLeft: 50,
+        paddingRight: 50
+    },
+    configIcon: {
+        width: 48,
+        height: 48
     }
 });

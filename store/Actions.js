@@ -62,3 +62,17 @@ export const saveUserPhotoAction = photo => ({
 export const toggleModalAction = bool => ({
     type: bool ? Constants.OPEN_MODAL : Constants.CLOSE_MODAL,
 });
+
+export const saveBroadcastIdAction = broadcastId => ({
+    type: Constants.SAVE_BROADCAST_ID,
+    broadcastId
+});
+
+export const broadcastStateAction = bool => ({
+    type: bool ? Constants.BROADCAST_ON : Constants.BROADCAST_OFF
+});
+
+export const changePasswordAction = info => ({
+    type: Constants.CHANGE_PASSWORD,
+    info
+});

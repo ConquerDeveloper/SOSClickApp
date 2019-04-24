@@ -5,7 +5,8 @@ import {
     editUserAction,
     goBackAction,
     openGalleryAction,
-    toggleModalAction
+    toggleModalAction,
+    changePasswordAction
 } from "../store/Actions";
 
 class UserProfile extends React.Component {
@@ -35,6 +36,7 @@ class UserProfile extends React.Component {
                                 handleOpenGallery={this.props.handleOpenGallery}
                                 openModalChangePassword={() => this.props.handleToggleModal(true)}
                                 hideModalChangePassword={() => this.props.handleToggleModal(false)}
+                                handleChangePassword={this.props.handleChangePassword}
         />
     }
 
@@ -55,6 +57,9 @@ const mapDispatchToProps = dispatch => ({
     },
     handleToggleModal: bool => {
         dispatch(toggleModalAction(bool));
+    },
+    handleChangePassword: info => {
+        dispatch(changePasswordAction(info));
     }
 });
 

@@ -7,6 +7,7 @@ const Constants = {
     LOG_OUT_API: 'http://190.98.210.42/sos_click_api/public/api/auth/logout',
     EDIT_USER_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editar',
     UPDATE_PHOTO_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editarFotoPerfil',
+    CHANGE_PASSWORD_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editarPassword',
     SIGN_UP: 'SIGN_UP',
     SHOW_SPINNER: 'SHOW_SPINNER',
     HIDE_SPINNER: 'HIDE_SPINNER',
@@ -24,7 +25,11 @@ const Constants = {
     OPEN_GALLERY: 'OPEN_GALLERY',
     SAVE_PHOTO: 'SAVE_PHOTO',
     OPEN_MODAL: 'OPEN_MODAL',
-    CLOSE_MODAL: 'CLOSE_MODAL'
+    CLOSE_MODAL: 'CLOSE_MODAL',
+    SAVE_BROADCAST_ID: 'SAVE_BROADCAST_ID',
+    BROADCAST_ON: 'BROADCAST_ON',
+    BROADCAST_OFF: 'BROADCAST_OFF',
+    CHANGE_PASSWORD: 'CHANGE_PASSWORD'
 };
 
 export default Constants;

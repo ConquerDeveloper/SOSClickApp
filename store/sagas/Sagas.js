@@ -18,7 +18,7 @@ import {
     saveUserInfoAction,
     userInfoAction,
     goBackAction,
-    saveUserPhotoAction
+    saveUserPhotoAction, toggleModalAction
 } from "../Actions";
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -351,6 +351,65 @@ function* sagaOpenGallery(item) {
     yield put(spinnerAction(false));
 }
 
+const changePassword = async info => {
+    const {
+        password,
+        password_confirmation
+    } = info;
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.CHANGE_PASSWORD_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            password,
+            password_confirmation
+        })
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}]);
+};
+
+function* sagaChangePassword(item) {
+    yield put(toggleModalAction(false));
+    yield put(spinnerAction(true));
+    try {
+        const {info} = item;
+        const result = yield call(changePassword, info);
+        const {status, response, response: {errors}} = result[0];
+        console.log('result', result);
+        switch (status) {
+            case 200:
+                Toast.show({
+                    text: response.message,
+                    buttonText: 'OK'
+                });
+                break;
+            case 422:
+                if (errors) {
+                    if (errors.password) {
+                        Toast.show({
+                            text: errors.password[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                    if (errors.password_confirmation) {
+                        Toast.show({
+                            text: errors.password_confirmation[0],
+                            buttonText: 'OK'
+                        });
+                    }
+                }
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
     yield takeEvery(Constants.SIGN_IN, sagaSignIn);
@@ -358,4 +417,5 @@ export default function* Generator() {
     yield takeEvery(Constants.LOG_OUT, sagaLogOut);
     yield takeEvery(Constants.EDIT_USER, sagaEditUser);
     yield takeEvery(Constants.OPEN_GALLERY, sagaOpenGallery);
+    yield takeEvery(Constants.CHANGE_PASSWORD, sagaChangePassword);
 }

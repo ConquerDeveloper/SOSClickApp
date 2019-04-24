@@ -79,6 +79,26 @@ const toggleModalReducer = (state = false, action) => {
     }
 };
 
+const broadcastReducer = (state = null, action) => {
+    switch (action.type) {
+        case Constants.SAVE_BROADCAST_ID:
+            return state = action.broadcastId;
+        default:
+            return state;
+    }
+};
+
+const broadcastStateReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.BROADCAST_ON:
+            return state = true;
+        case Constants.BROADCAST_OFF:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -87,6 +107,8 @@ const reducers = combineReducers({
     goBackReducer,
     userPhotoReducer,
     toggleModalReducer,
+    broadcastReducer,
+    broadcastStateReducer,
     form
 });
 

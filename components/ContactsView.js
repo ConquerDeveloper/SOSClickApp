@@ -32,9 +32,19 @@ const ContactsView = props => {
         contacts,
         spinner
     } = props;
+    contacts.sort(function (a, b) {
+        if (`${a.givenName} ${a.familyName}` < `${b.givenName} ${b.familyName}`) {
+            return -1;
+        }
+        if (`${a.givenName} ${a.familyName}` > `${b.givenName} ${b.familyName}`) {
+            return 1;
+        }
+        return 0;
+    });
     return (
         <Container>
-            <Spinner visible={spinner}/>
+            <Spinner visible={spinner}
+            />
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>
@@ -93,7 +103,7 @@ const ContactsView = props => {
                                round
                             //onChangeText={props.searchContact}
                             //value={props.searchValue}
-                               placeholderTextColor='rgba(59,85,117, .6)'
+                               placeholderTextColor='rgba(59, 85, 117, .6)'
                                style={{fontSize: 16, fontFamily: 'UniSansRegular'}}
                         />
                     </Item>

@@ -1,4 +1,4 @@
-package com.sosclickapp;
+package com.naturalphone.sosclick;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

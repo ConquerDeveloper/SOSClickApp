@@ -22,12 +22,12 @@ const Spinner = props => {
                     width: props.progressText ? 100 : 80,
                     height: props.progressText ? 100 : 80,
                     backgroundColor: 'rgba(0, 0, 0, .8)',
-                    borderRadius: 10,
+                    borderRadius: 10
                 }}>
                     <View style={{
                         ...generalStyles.columnCenteredContainer
                     }}>
-                        <ActivityIndicator size="large" color="#fff" />
+                        <ActivityIndicator size="large" color="#fff"/>
                         {props.progressText && <Text style={{
                             color: '#fff',
                             fontWeight: 'bold',

@@ -5,7 +5,10 @@ import {
     spinnerAction,
     cleanContactsAction
 } from "../store/Actions";
-import {PermissionsAndroid} from "react-native";
+import {
+    PermissionsAndroid,
+    AsyncStorage
+} from "react-native";
 import Contacts from 'react-native-contacts';
 import ContactsView from "../components/ContactsView";
 
@@ -14,27 +17,37 @@ class ContactsNetwork extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.handleSpinner(true);
-        PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-            {
-                'title': 'Contacts',
-                'message': 'This app would like to view your contacts.'
-            }
-        ).then(() => {
-            Contacts.getAll((err, contacts) => {
-                if (err === 'denied'){
-                    this.props.handleSpinner(false);
-                    // error
-                } else {
-                    // contacts returned in Array
-                    console.warn('contacts', contacts);
-                    this.props.handleSpinner(false);
-                    this.props.handleSaveContacts(contacts);
+        const contactsList = await AsyncStorage.getItem('contacts');
+        if (!contactsList) {
+            const permission = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+                {
+                    'title': 'Contacts',
+                    'message': 'This app would like to view your contacts.'
                 }
-            })
-        })
+            );
+            if (permission) {
+                Contacts.getAll(async (err, contacts) => {
+                    if (err === 'denied') {
+                        this.props.handleSpinner(false);
+                        // error
+                    } else {
+                        // contacts returned in Array
+                        this.props.handleSpinner(false);
+                        console.warn('contacts', contacts);
+                        const contactsArray = AsyncStorage.setItem('contacts', `${JSON.stringify(contacts)}`);
+                        console.log('contacts1', contactsArray);
+                        //this.props.handleSaveContacts(contactsArray);
+                    }
+                })
+            }
+        } else {
+            this.props.handleSpinner(false);
+            console.log('contacts2', JSON.parse(await contactsList));
+            this.props.handleSaveContacts(JSON.parse(await contactsList));
+        }
     }
 
     render() {

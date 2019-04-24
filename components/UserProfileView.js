@@ -40,6 +40,7 @@ const UserProfileView = props => {
             <Spinner visible={spinner}/>
             <ModalChangePassword visible={isModalVisible}
                                  hideModalChangePassword={props.hideModalChangePassword}
+                                 handleChangePassword={props.handleChangePassword}
             />
             <ActionSheet
                 ref={o => this.ActionSheet = o}
@@ -59,19 +60,13 @@ const UserProfileView = props => {
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>
-                <Left style={{flex: 1}}>
+                <Left>
                     <Button transparent
                             onPress={() => navigation.goBack()}>
                         <Icon name='arrow-back'/>
                     </Button>
                 </Left>
-                <Body style={generalStyles.alignRow}>
-                    <Title style={{
-                        ...generalStyles.headerTitle,
-                        width,
-                        fontFamily: 'UniSansRegular'
-                    }}>Mi perfil</Title>
-                </Body>
+                <Body/>
                 <Right/>
             </Header>
             <View style={{flex: 1}}>

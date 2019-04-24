@@ -14,6 +14,7 @@ import FooterView from '../includes/FooterView';
 import CustomDrawerContentComponent from '../includes/CustomDrawerContentComponent';
 import logOut from '../containers/logOut';
 import Broadcast from '../containers/Broadcast';
+import Broadcasting from '../containers/Broadcasting';
 import SecurityNetwork from '../containers/SecurityNetwork';
 import ContactsNetwork from '../containers/ContactsNetwork';
 import UserProfile from '../containers/UserProfile';
@@ -104,6 +105,12 @@ const Routing = createStackNavigator({
     },
     UserProfileScreen: {
         screen: UserProfile,
+        navigationOptions: {
+            header: null
+        }
+    },
+    BroadcastingScreen: {
+        screen: Broadcasting,
         navigationOptions: {
             header: null
         }

@@ -19,6 +19,7 @@
     "react-native-actionsheet": "^2.4.2",
     "react-native-bambuser-broadcaster": "^0.0.7",
     "react-native-contacts": "^4.0.1",
+    "react-native-firebase": "^5.3.1",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-image-crop-picker": "^0.23.1",
     "react-native-onboarding-swiper": "^1.0.1",
