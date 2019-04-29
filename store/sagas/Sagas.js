@@ -1,8 +1,7 @@
 import React from 'react';
 import {
     AsyncStorage,
-    Platform,
-    Alert
+    PermissionsAndroid
 } from 'react-native';
 import {
     takeEvery,
@@ -18,9 +17,20 @@ import {
     saveUserInfoAction,
     userInfoAction,
     goBackAction,
-    saveUserPhotoAction, toggleModalAction
+    saveUserPhotoAction,
+    toggleModalAction,
+    saveContactsAction,
+    isSelectedAction,
+    selectSingleItemAction,
+    selectedAction,
+    deselectAction,
+    saveSecurityNetwork,
+    addNewContactAction
 } from "../Actions";
 import ImagePicker from 'react-native-image-crop-picker';
+import Contacts from "react-native-contacts";
+
+this.contacts = [];
 
 const signUp = async info => {
     const response = await fetch(Constants.SIGN_UP_API, {
@@ -326,7 +336,11 @@ const openGallery = async requestType => {
             foto_perfil: cloudinaryResponse.secure_url
         })
     });
-    return Promise.all([{status: await apiResponse.status, response: await apiResponse.json(), img: cloudinaryResponse.secure_url}]);
+    return Promise.all([{
+        status: await apiResponse.status,
+        response: await apiResponse.json(),
+        img: cloudinaryResponse.secure_url
+    }]);
 };
 
 function* sagaOpenGallery(item) {
@@ -410,6 +424,223 @@ function* sagaChangePassword(item) {
     yield put(spinnerAction(false));
 }
 
+const requestContacts = async () => {
+    /*  const contactsList = await AsyncStorage.getItem('contacts');
+      if (!contactsList) {
+          const permission = await   PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+              {
+                  'title': 'Contacts',
+                  'message': 'This app would like to view your contacts.'
+              }
+          );
+          if (permission) {
+              return new Promise(resolve => {
+                  Contacts.getAll((err, contacts) => {
+                      if (err === 'denied') {
+                          console.log(err);
+                      } else {
+                          const contactsArray = AsyncStorage.setItem('contacts', JSON.stringify(contacts));
+                          resolve(contactsArray);
+                      }
+                  });
+              });
+          }
+      } else {
+          return new Promise(resolve => {
+             resolve(JSON.parse(contactsList));
+          });
+      }*/
+    const permission = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+        {
+            'title': 'Contacts',
+            'message': 'This app would like to view your contacts.'
+        }
+    );
+    if (permission) {
+        return new Promise(resolve => {
+            Contacts.getAll((err, contacts) => {
+                if (err === 'denied') {
+                    console.log(err);
+                } else {
+                    resolve(contacts);
+                }
+            });
+        });
+    }
+};
+
+function* sagaLoadContacts() {
+    yield put(spinnerAction(true));
+    try {
+        const contacts = yield call(requestContacts);
+        const securityNetwork = yield select(state => state.securityNetworkReducer);
+        const res = contacts.filter((item1, index) =>
+            !securityNetwork.some(item2 => {
+                if (item1.phoneNumbers[0]) {
+                    return (item2.numero_telefono === item1.phoneNumbers[0].number.replace('+56', '').replace(/\s/g, ''))
+                }
+            }));
+        this.contacts = res;
+        let array = [];
+        for (let i = 0; i < this.contacts.length; i++) {
+            array.push({isSelected: false});
+        }
+        yield put(isSelectedAction(array));
+        yield put(saveContactsAction(res));
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
+function* sagaSearchContact(item) {
+    const {text} = item;
+    const newData = this.contacts.filter(item => {
+        const itemData = `${item.givenName.toUpperCase()}`;
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+    });
+    yield put(saveContactsAction(newData));
+}
+
+function* sagaToggleSelected(item) {
+    const {array, index} = item;
+    const isSelected = yield select(state => state.isSelectedReducer);
+    const selectedContacts = yield select(state => state.selectedItemsReducer);
+    isSelected[index].isSelected = !isSelected[index].isSelected;
+    yield put(selectSingleItemAction(isSelected));
+    if (isSelected[index].isSelected) {
+        yield put(selectedAction(array));
+    } else {
+        selectedContacts.splice(index, 1);
+        yield put(deselectAction(selectedContacts));
+    }
+}
+
+const addToNetwork = async array => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.SAVE_NETWORK_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            contactos: {
+                ...array
+            }
+        })
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}]);
+};
+
+function* sagaAddToNetwork() {
+    yield put(spinnerAction(true));
+    try {
+        const selectedContacts = yield select(state => state.selectedItemsReducer);
+        const result = yield call(addToNetwork, selectedContacts);
+        const {status, response} = result[0];
+        switch (status) {
+            case 200:
+                yield put(addNewContactAction(selectedContacts));
+                yield put(goBackAction(true));
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
+const loadSecurityNetwork = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.LOAD_SECURITY_NETWORK_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'GET'
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}])
+};
+
+function* sagaLoadSecurityNetwork() {
+    yield put(spinnerAction(true));
+    try {
+        const result = yield call(loadSecurityNetwork);
+        const {status, response} = result[0];
+        console.log('status', status);
+        console.log('response', response);
+        switch (status) {
+            case 200:
+                yield put(saveSecurityNetwork(response));
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
+
+function* sagaSelectedRemove() {
+    const securityNetwork = yield select(state => state.securityNetworkReducer);
+    let array = [];
+    for (let i = 0; i < securityNetwork.length; i++) {
+        array.push({
+            isSelected: false
+        });
+    }
+    yield put(isSelectedAction(array));
+}
+
+const removeNetwork = async array => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.REMOVE_NETWORK_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            ...array
+        })
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}])
+};
+
+function* sagaRemoveNetwork() {
+    try {
+        const selectedContacts = yield select(state => state.selectedItemsReducer);
+        console.log('selectedContacts', selectedContacts);
+        const result = yield call(removeNetwork, selectedContacts);
+        const {status, response} = result[0];
+        console.log('status', status);
+        console.log('response', response);
+        switch (status) {
+            case 200:
+                Toast.show({
+                    text: response.mensaje,
+                    buttonText: 'OK'
+                });
+                yield put(goBackAction(true));
+                break;
+            case 421:
+                Toast.show({
+                    text: response.mensaje,
+                    buttonText: 'OK'
+                });
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
     yield takeEvery(Constants.SIGN_IN, sagaSignIn);
@@ -418,4 +649,11 @@ export default function* Generator() {
     yield takeEvery(Constants.EDIT_USER, sagaEditUser);
     yield takeEvery(Constants.OPEN_GALLERY, sagaOpenGallery);
     yield takeEvery(Constants.CHANGE_PASSWORD, sagaChangePassword);
+    yield takeEvery(Constants.LOAD_CONTACTS, sagaLoadContacts);
+    yield takeEvery(Constants.SEARCH_CONTACT, sagaSearchContact);
+    yield takeEvery(Constants.TOGGLE_SELECTED, sagaToggleSelected);
+    yield takeEvery(Constants.ADD_TO_NETWORK, sagaAddToNetwork);
+    yield takeEvery(Constants.LOAD_SECURITY_NETWORK, sagaLoadSecurityNetwork);
+    yield takeEvery(Constants.IS_SELECTED_REMOVE, sagaSelectedRemove);
+    yield takeEvery(Constants.REMOVE_NETWORK, sagaRemoveNetwork);
 }

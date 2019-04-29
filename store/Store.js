@@ -99,6 +99,41 @@ const broadcastStateReducer = (state = false, action) => {
     }
 };
 
+const isSelectedReducer = (state = [], action) => {
+    switch (action.type) {
+        case Constants.IS_SELECTED:
+            return state = action.array;
+        case Constants.SELECT_SINGLE_ITEM:
+            return state = [...action.array];
+        case Constants.CLEAN_SELECTED:
+            return state = [];
+        default:
+            return state;
+    }
+};
+
+const selectedItemsReducer = (state = [], action) => {
+    switch (action.type) {
+        case Constants.SELECTED_ITEM:
+            return state = [...state, ...action.array];
+        case Constants.DESELECT_ITEM:
+            return state = [...action.array];
+        default:
+            return state;
+    }
+};
+
+const securityNetworkReducer = (state = [], action) => {
+    switch (action.type) {
+        case Constants.SAVE_SECURITY_NETWORK:
+            return state = action.array;
+        case Constants.ADD_NEW_CONTACT:
+            return state = [...state, ...action.array];
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -109,6 +144,9 @@ const reducers = combineReducers({
     toggleModalReducer,
     broadcastReducer,
     broadcastStateReducer,
+    isSelectedReducer,
+    selectedItemsReducer,
+    securityNetworkReducer,
     form
 });
 

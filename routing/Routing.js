@@ -18,6 +18,7 @@ import Broadcasting from '../containers/Broadcasting';
 import SecurityNetwork from '../containers/SecurityNetwork';
 import ContactsNetwork from '../containers/ContactsNetwork';
 import UserProfile from '../containers/UserProfile';
+import RemoveSecurityNetwork from '../containers/RemoveSecurityNetwork';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -111,6 +112,12 @@ const Routing = createStackNavigator({
     },
     BroadcastingScreen: {
         screen: Broadcasting,
+        navigationOptions: {
+            header: null
+        }
+    },
+    RemoveSecurityNetworkScreen: {
+        screen: RemoveSecurityNetwork,
         navigationOptions: {
             header: null
         }

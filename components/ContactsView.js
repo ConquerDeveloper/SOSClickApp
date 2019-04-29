@@ -11,18 +11,21 @@ import {
     Header,
     Item,
     Input,
-    List,
-    ListItem,
     CheckBox
 } from 'native-base';
 import {
     Image,
     Dimensions,
     View,
-    ScrollView
+    ScrollView,
+    TouchableOpacity,
+    FlatList
 } from "react-native";
 import Spinner from '../includes/Spinner';
-import {generalStyles, securityNetworkStyles} from "../includes/styles";
+import {
+    generalStyles,
+    securityNetworkStyles
+} from "../includes/styles";
 
 const {width} = Dimensions.get('window');
 
@@ -30,7 +33,9 @@ const ContactsView = props => {
     const {
         navigation,
         contacts,
-        spinner
+        spinner,
+        isSelected,
+        showHeader
     } = props;
     contacts.sort(function (a, b) {
         if (`${a.givenName} ${a.familyName}` < `${b.givenName} ${b.familyName}`) {
@@ -48,7 +53,7 @@ const ContactsView = props => {
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>
-                <Left style={{flex: 1}}>
+                <Left style={{flex: 1, zIndex: 9999}}>
                     <Button transparent
                             onPress={() => navigation.goBack()}>
                         <Icon name='arrow-back'/>
@@ -59,21 +64,27 @@ const ContactsView = props => {
                         ...generalStyles.headerTitle,
                         width,
                         fontFamily: 'UniSansRegular'
-                    }}>Red de seguridad</Title>
+                    }}>Mis contactos</Title>
                 </Body>
                 <Right/>
             </Header>
             <View style={securityNetworkStyles.container}>
-                <View style={securityNetworkStyles.logoContainer}>
-                    <View style={generalStyles.columnCenteredContainer}>
-                        <Image source={require('../assets/img/security-network-icon.png')}
-                               style={securityNetworkStyles.logo}
-                        />
+                {
+                    showHeader &&
+                    <View>
+                        <View style={securityNetworkStyles.logoContainer}>
+                            <View style={generalStyles.columnCenteredContainer}>
+                                <Image source={require('../assets/img/security-network-icon.png')}
+                                       style={securityNetworkStyles.logo}
+                                />
+                            </View>
+                        </View>
+                        <Title style={securityNetworkStyles.title}>Red de seguridad</Title>
+                        <Text style={securityNetworkStyles.subtitle}>Agregue los contactos que formarán{"\n"} parte de
+                            su red de
+                            seguridad</Text>
                     </View>
-                </View>
-                <Title style={securityNetworkStyles.title}>Red de seguridad</Title>
-                <Text style={securityNetworkStyles.subtitle}>Agregue los contactos que formarán{"\n"} parte de su red de
-                    seguridad</Text>
+                }
                 <View style={{
                     paddingLeft: 20,
                     paddingRight: 20
@@ -101,34 +112,87 @@ const ContactsView = props => {
                                autoCorrect={false}
                                lightTheme
                                round
-                            //onChangeText={props.searchContact}
-                            //value={props.searchValue}
+                               onChangeText={props.searchContact}
+                               value={props.textFilter}
                                placeholderTextColor='rgba(59, 85, 117, .6)'
                                style={{fontSize: 16, fontFamily: 'UniSansRegular'}}
                         />
                     </Item>
                 </View>
-                <ScrollView>
-                    <List style={securityNetworkStyles.listContacts}>
-                        {
-                            contacts.length > 0 && contacts.map((item, index) => {
+                <ScrollView style={{
+                    marginTop: 20
+                }}>
+                    <FlatList
+                        data={contacts}
+                        initialNumToRender={10}
+                        extraData={isSelected}
+                        renderItem={({item, index}) => {
+                            if (item.phoneNumbers.length > 0 && item.givenName !== "") {
+                                const array = [{
+                                    nombre: `${item.givenName}`,
+                                    numero_telefono: item.phoneNumbers[0].number.replace('+56', '').replace(/\s/g, '').toString()
+                                }];
                                 return (
-                                    <ListItem key={index}
-                                              icon
-                                              style={{marginLeft: 0}}>
-                                        <Body>
-                                            <Text style={{marginLeft: 20}}>{item.givenName}</Text>
-                                        </Body>
-                                        <Right>
-                                            <CheckBox checked={true}
-                                                      color={'green'}/>
-                                        </Right>
-                                    </ListItem>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        borderBottomWidth: 1,
+                                        borderBottomColor: '#E1E1E1',
+                                        marginBottom: 10
+                                    }}>
+                                        <View style={{flexDirection: 'column'}}>
+                                            <Text style={{
+                                                marginLeft: 30,
+                                                alignSelf: 'flex-start',
+                                                fontFamily: 'UniSansRegular',
+                                                color: '#606A75',
+                                                fontSize: 17
+                                            }}>{`${item.givenName}`}</Text>
+                                            <Text note
+                                                  style={{
+                                                      marginLeft: 30,
+                                                      marginBottom: 10,
+                                                  }}>{item.phoneNumbers[0].number}</Text>
+                                        </View>
+                                        <CheckBox checked={isSelected[index] && isSelected[index].isSelected}
+                                                  onPress={() => props.handleSelected(array, index)}
+                                                  color={'#03E19C'}
+                                                  style={{
+                                                      marginRight: 30,
+                                                      marginBottom: 10
+                                                  }}
+                                        />
+                                    </View>
                                 )
-                            })
-                        }
-                    </List>
+                            }
+                        }}
+                    />
                 </ScrollView>
+                <View style={{
+                    position: 'absolute',
+                    bottom: 30,
+                    left: 0,
+                    right: 0,
+                    alignItems: 'center'
+                }}>
+                    <TouchableOpacity onPress={props.handleAddToNetwork}
+                                      style={{
+                                          height: 53,
+                                          width: 319,
+                                          backgroundColor: '#D0282E',
+                                          borderRadius: 4
+                                      }}>
+                        <View style={generalStyles.columnCenteredContainer}>
+                            <Text style={{
+                                fontFamily: 'UniSansRegular',
+                                fontSize: 16,
+                                textAlign: 'center',
+                                color: '#fff'
+                            }}>Agregar a mi red</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </Container>
     );

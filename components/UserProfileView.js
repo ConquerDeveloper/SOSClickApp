@@ -60,13 +60,19 @@ const UserProfileView = props => {
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>
-                <Left>
+                <Left style={{flex: 1, zIndex: 9999}}>
                     <Button transparent
                             onPress={() => navigation.goBack()}>
                         <Icon name='arrow-back'/>
                     </Button>
                 </Left>
-                <Body/>
+                <Body style={generalStyles.alignRow}>
+                    <Title style={{
+                        ...generalStyles.headerTitle,
+                        width,
+                        fontFamily: 'UniSansRegular'
+                    }}>Mi perfil</Title>
+                </Body>
                 <Right/>
             </Header>
             <View style={{flex: 1}}>

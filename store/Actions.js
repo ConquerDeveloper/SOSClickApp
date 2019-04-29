@@ -76,3 +76,68 @@ export const changePasswordAction = info => ({
     type: Constants.CHANGE_PASSWORD,
     info
 });
+
+export const loadContactsAction = () => ({
+    type: Constants.LOAD_CONTACTS
+});
+
+export const searchContactAction = text => ({
+    type: Constants.SEARCH_CONTACT,
+    text
+});
+
+export const isSelectedAction = array => ({
+    type: Constants.IS_SELECTED,
+    array
+});
+
+export const toggleSelectedAction = (array, index) => ({
+    type: Constants.TOGGLE_SELECTED,
+    array,
+    index
+});
+
+export const selectSingleItemAction = array => ({
+    type: Constants.SELECT_SINGLE_ITEM,
+    array
+});
+
+export const addToNetworkAction = () => ({
+    type: Constants.ADD_TO_NETWORK
+});
+
+export const selectedAction = array => ({
+    type: Constants.SELECTED_ITEM,
+    array
+});
+
+export const deselectAction = array => ({
+   type: Constants.DESELECT_ITEM,
+   array
+});
+
+export const saveSecurityNetwork = array => ({
+    type: Constants.SAVE_SECURITY_NETWORK,
+    array
+});
+
+export const loadSecurityNetworkAction = () => ({
+    type: Constants.LOAD_SECURITY_NETWORK
+});
+
+export const addNewContactAction = array => ({
+    type: Constants.ADD_NEW_CONTACT,
+    array
+});
+
+export const cleanSelectedAction = () => ({
+    type: Constants.CLEAN_SELECTED
+});
+
+export const isSelectedRemove = () => ({
+    type: Constants.IS_SELECTED_REMOVE
+});
+
+export const removeNetworkAction = () => ({
+    type: Constants.REMOVE_NETWORK
+});

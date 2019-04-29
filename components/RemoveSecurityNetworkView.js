@@ -1,41 +1,30 @@
 import React from 'react';
 import {
-    Text,
-    Container,
-    Header,
-    Left,
-    Button,
-    Icon,
     Body,
-    Title,
-    Right,
-    Item,
-    Input,
-    CheckBox
-} from 'native-base';
+    Button, CheckBox,
+    Container, Header, Icon, Input, Item, Left, Right,
+    Text, Title
+} from "native-base";
 import {
-    Dimensions,
+    FlatList,
     Image,
     ScrollView,
     TouchableOpacity,
     View,
-    FlatList
+    Dimensions
 } from "react-native";
-import Spinner from '../includes/Spinner';
-import {
-    generalStyles,
-    securityNetworkStyles
-} from "../includes/styles";
+import {generalStyles, securityNetworkStyles} from "../includes/styles";
+import Spinner from "../includes/Spinner";
 
 const {width} = Dimensions.get('window');
 
-const SecurityNetworkView = props => {
+const RemoveSecurityNetworkView = props => {
     const {
         navigation,
         spinner,
-        securityNetwork
+        securityNetwork,
+        isSelected
     } = props;
-    console.log('securityNetwork', securityNetwork);
     return (
         <Container>
             <Spinner visible={spinner}
@@ -54,25 +43,13 @@ const SecurityNetworkView = props => {
                         ...generalStyles.headerTitle,
                         width,
                         fontFamily: 'UniSansRegular'
-                    }}>Red de seguridad</Title>
+                    }}>Editar contactos</Title>
                 </Body>
                 <Right/>
             </Header>
             <View style={securityNetworkStyles.container}>
                 <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('RemoveSecurityNetworkScreen')}
-                                      style={securityNetworkStyles.editButton}>
-                        <View style={generalStyles.columnCenteredContainer}>
-                            <Icon type={'Ionicons'}
-                                  name={'create'}
-                                  style={securityNetworkStyles.editIcon}
-                            />
-                        </View>
-                    </TouchableOpacity>
-                    <View style={{
-                        ...securityNetworkStyles.logoContainer,
-                        marginTop: 0
-                    }}>
+                    <View style={securityNetworkStyles.logoContainer}>
                         <View style={generalStyles.columnCenteredContainer}>
                             <Image source={require('../assets/img/security-network-icon.png')}
                                    style={securityNetworkStyles.logo}
@@ -80,8 +57,8 @@ const SecurityNetworkView = props => {
                         </View>
                     </View>
                     <Title style={securityNetworkStyles.title}>Red de seguridad</Title>
-                    <Text style={securityNetworkStyles.subtitle}>Agregue los contactos que formarán{"\n"} parte de su
-                        red de
+                    <Text style={securityNetworkStyles.subtitle}>Agregue los contactos que formarán{"\n"} parte de
+                        su red de
                         seguridad</Text>
                 </View>
                 <ScrollView style={{
@@ -89,7 +66,13 @@ const SecurityNetworkView = props => {
                 }}>
                     <FlatList
                         data={securityNetwork}
+                        extraData={isSelected}
                         renderItem={({item, index}) => {
+                            const array = [{
+                                id_seguridad: item.id,
+                                nombre: `${item.nombre}`,
+                                numero_telefono: item.numero_telefono
+                            }];
                             return (
                                 <View key={index}
                                       style={{
@@ -114,6 +97,14 @@ const SecurityNetworkView = props => {
                                                   marginBottom: 10,
                                               }}>{item.numero_telefono}</Text>
                                     </View>
+                                    <CheckBox checked={isSelected[index] && isSelected[index].isSelected}
+                                              onPress={() => props.handleSelected(array, index)}
+                                              color={'#03E19C'}
+                                              style={{
+                                                  marginRight: 30,
+                                                  marginBottom: 10
+                                              }}
+                                    />
                                 </View>
                             )
                         }}
@@ -126,7 +117,7 @@ const SecurityNetworkView = props => {
                     right: 0,
                     alignItems: 'center'
                 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('ContactsScreen')}
+                    <TouchableOpacity onPress={props.handleRemoveNetwork}
                                       style={{
                                           height: 53,
                                           width: 319,
@@ -139,13 +130,13 @@ const SecurityNetworkView = props => {
                                 fontSize: 16,
                                 textAlign: 'center',
                                 color: '#fff'
-                            }}>Agregar contactos</Text>
+                            }}>Eliminar de mi red</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
             </View>
         </Container>
-    );
+    )
 };
 
-export default SecurityNetworkView;
+export default RemoveSecurityNetworkView;

@@ -8,6 +8,9 @@ const Constants = {
     EDIT_USER_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editar',
     UPDATE_PHOTO_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editarFotoPerfil',
     CHANGE_PASSWORD_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user/editarPassword',
+    SAVE_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/crear',
+    LOAD_SECURITY_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/lista',
+    REMOVE_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/eliminar',
     SIGN_UP: 'SIGN_UP',
     SHOW_SPINNER: 'SHOW_SPINNER',
     HIDE_SPINNER: 'HIDE_SPINNER',
@@ -29,7 +32,21 @@ const Constants = {
     SAVE_BROADCAST_ID: 'SAVE_BROADCAST_ID',
     BROADCAST_ON: 'BROADCAST_ON',
     BROADCAST_OFF: 'BROADCAST_OFF',
-    CHANGE_PASSWORD: 'CHANGE_PASSWORD'
+    CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+    SEARCH_CONTACT: 'SEARCH_CONTACT',
+    LOAD_CONTACTS: 'LOAD_CONTACTS',
+    IS_SELECTED: 'IS_SELECTED',
+    TOGGLE_SELECTED: 'TOGGLE_SELECTED',
+    SELECT_SINGLE_ITEM: 'SELECT_SINGLE_ITEM',
+    ADD_TO_NETWORK: 'ADD_TO_NETWORK',
+    SELECTED_ITEM: 'SELECTED_ITEM',
+    DESELECT_ITEM: 'DESELECT_ITEM',
+    SAVE_SECURITY_NETWORK: 'SAVE_SECURITY_NETWORK',
+    LOAD_SECURITY_NETWORK: 'LOAD_SECURITY_NETWORK',
+    ADD_NEW_CONTACT: 'ADD_NEW_CONTACT',
+    CLEAN_SELECTED: 'CLEAN_SELECTED',
+    IS_SELECTED_REMOVE: 'IS_SELECTED_REMOVE',
+    REMOVE_NETWORK: 'REMOVE_NETWORK'
 };
 
 export default Constants;

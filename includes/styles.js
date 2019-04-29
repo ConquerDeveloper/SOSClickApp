@@ -77,7 +77,8 @@ export const loginStyles = StyleSheet.create({
     },
     logo: {
         width: 260,
-        height: 260
+        height: 260,
+        flex: 1
     },
     signInForm: {
         flex: 1,
@@ -162,12 +163,9 @@ export const footerStyles = StyleSheet.create({
 export const homeStyles = StyleSheet.create({
     imageBackground: {
         flex: 1,
-        width,
-        height: 200,
-        resizeMode: 'cover',
-        alignSelf: 'center',
-        zIndex: -1,
-        backgroundColor: '#F5F8FA'
+        width: undefined,
+        height: '80%',
+        resizeMode: 'cover'
     }
 });
 
@@ -236,6 +234,27 @@ export const securityNetworkStyles = StyleSheet.create({
         marginTop: 20,
         paddingLeft: 0,
         marginLeft: 0
+    },
+    editButton: {
+        width: 40,
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 40 / 2,
+        alignSelf: 'flex-end',
+        marginTop: 20,
+        marginRight: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 2.84,
+        elevation: 2,
+    },
+    editIcon: {
+        fontSize: 20,
+        color: '#606A75'
     }
 });
 
