@@ -29,7 +29,8 @@ class Broadcast extends React.Component {
         try {
             const granted = await PermissionsAndroid.requestMultiple([
                 PermissionsAndroid.PERMISSIONS.CAMERA,
-                PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+                PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
             ]);
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 console.log('You can use the camera');
@@ -56,68 +57,3 @@ class Broadcast extends React.Component {
 }
 
 export default connect()(Broadcast);
-
-
-/*
-
-<View style={{
-    justifyContent: "center",
-    alignItems: "center"
-}}>
-    <RNBambuserBroadcaster ref={ref => {
-        this.myBroadcasterRef = ref;
-    }} applicationId={'AEI3qY0EhtPUWiyg28UV3A'}
-                           title={'Kevin Abreu'}
-                           style={{
-                               width,
-                               height,
-                               position: "absolute",
-                               top: 0,
-                               left: 0,
-                               bottom: 0,
-                               right: 0,
-                               zIndex: -1
-                           }}
-                           onBroadcastIdReceived={broadcastId => alert(broadcastId)}
-    >
-        <View style={{
-            alignItems: 'space-between',
-            justifyContent: 'flex-end',
-            flex: 1,
-            alignSelf: 'center',
-            flexDirection: 'row'
-        }}>
-            <TouchableOpacity onPress={() => {
-                this.myBroadcasterRef.startBroadcast();
-            }}
-                              style={{
-                                  marginBottom: 50,
-                                  width: 100,
-                                  height: 100,
-                                  backgroundColor: '#09f'
-                              }}>
-                <Text>INICIAR</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.myBroadcasterRef.getRecentPosition()}
-                              style={{
-                                  marginTop: 5,
-                                  width: 100,
-                                  height: 100,
-                                  backgroundColor: 'red',
-                                  marginBottom: 50,
-                              }}>
-                <Text>Detener</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.myBroadcasterRef.switchCamera()}
-                              style={{
-                                  marginTop: 5,
-                                  width: 100,
-                                  height: 100,
-                                  backgroundColor: 'green',
-                                  marginBottom: 50,
-                              }}>
-                <Text>Voltear cámara</Text>
-            </TouchableOpacity>
-        </View>
-    </RNBambuserBroadcaster>
-</View>*/

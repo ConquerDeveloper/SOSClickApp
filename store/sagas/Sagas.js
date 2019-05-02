@@ -52,7 +52,6 @@ function* sagaSignUp(data) {
         const {info} = data;
         const result = yield call(signUp, info);
         const {status, response: {errors}} = result[0];
-        console.log('result', result);
         switch (status) {
             case 200:
                 Toast.show({
@@ -160,7 +159,6 @@ function* sagaLoadUserInfo() {
     try {
         const result = yield call(loadUserInfo);
         const {status, response} = result[0];
-        console.log('userinfo', result);
         switch (status) {
             case 200:
                 yield put(saveUserInfoAction(response));
@@ -189,7 +187,6 @@ function* sagaLogOut() {
     yield put(spinnerAction(true));
     try {
         const result = yield call(logOut);
-        console.log('result', result);
         const {status} = result[0];
         switch (status) {
             case 200:
@@ -224,7 +221,6 @@ function* sagaEditUser(info) {
         const {obj} = info;
         const result = yield call(editUser, obj);
         const userInfo = yield select(state => state.userInfoReducer);
-        console.warn(result);
         const {status, response, response: {errors}} = result[0];
         switch (status) {
             case 200:
@@ -348,7 +344,6 @@ function* sagaOpenGallery(item) {
     try {
         const {requestType} = item;
         const result = yield call(openGallery, requestType);
-        console.log('result', result);
         const {status, response, img} = result[0];
         switch (status) {
             case 200:
@@ -393,7 +388,6 @@ function* sagaChangePassword(item) {
         const {info} = item;
         const result = yield call(changePassword, info);
         const {status, response, response: {errors}} = result[0];
-        console.log('result', result);
         switch (status) {
             case 200:
                 Toast.show({
@@ -425,32 +419,6 @@ function* sagaChangePassword(item) {
 }
 
 const requestContacts = async () => {
-    /*  const contactsList = await AsyncStorage.getItem('contacts');
-      if (!contactsList) {
-          const permission = await   PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-              {
-                  'title': 'Contacts',
-                  'message': 'This app would like to view your contacts.'
-              }
-          );
-          if (permission) {
-              return new Promise(resolve => {
-                  Contacts.getAll((err, contacts) => {
-                      if (err === 'denied') {
-                          console.log(err);
-                      } else {
-                          const contactsArray = AsyncStorage.setItem('contacts', JSON.stringify(contacts));
-                          resolve(contactsArray);
-                      }
-                  });
-              });
-          }
-      } else {
-          return new Promise(resolve => {
-             resolve(JSON.parse(contactsList));
-          });
-      }*/
     const permission = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
         {
@@ -619,8 +587,6 @@ function* sagaRemoveNetwork() {
         console.log('selectedContacts', selectedContacts);
         const result = yield call(removeNetwork, selectedContacts);
         const {status, response} = result[0];
-        console.log('status', status);
-        console.log('response', response);
         switch (status) {
             case 200:
                 Toast.show({

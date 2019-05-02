@@ -91,10 +91,14 @@ class Broadcasting extends React.Component {
                                                    }
                                                }
                                            } = this.props;
-                                           Firebase.database().ref(`broadcasting/${broadcastId}`).set({
-                                               broadcastId,
-                                               id,
-                                               nombre: `${nombre} ${primer_apellido}`
+                                           navigator.geolocation.getCurrentPosition(position => {
+                                               Firebase.database().ref(`broadcasting/${broadcastId}`).set({
+                                                   broadcastId,
+                                                   id,
+                                                   nombre: `${nombre} ${primer_apellido}`,
+                                                   longitud: position.coords.longitude,
+                                                   latitud: position.coords.latitude
+                                               });
                                            });
                                        }}
                 />
