@@ -584,7 +584,6 @@ const removeNetwork = async array => {
 function* sagaRemoveNetwork() {
     try {
         const selectedContacts = yield select(state => state.selectedItemsReducer);
-        console.log('selectedContacts', selectedContacts);
         const result = yield call(removeNetwork, selectedContacts);
         const {status, response} = result[0];
         switch (status) {
