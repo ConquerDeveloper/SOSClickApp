@@ -188,7 +188,8 @@ export const menuStyles = StyleSheet.create({
         width: 115,
         height: 115,
         borderRadius: 115 / 2,
-        marginBottom: 10
+        marginBottom: 5,
+        resizeMode: 'cover'
     }
 });
 

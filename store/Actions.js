@@ -141,3 +141,7 @@ export const isSelectedRemove = () => ({
 export const removeNetworkAction = () => ({
     type: Constants.REMOVE_NETWORK
 });
+
+export const toggleCameraDialogAction = bool => ({
+    type: bool ? Constants.SHOW_DIALOG_CAMERA : Constants.HIDE_DIALOG_CAMERA
+});

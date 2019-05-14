@@ -10,19 +10,10 @@ import {
 class logOut extends React.Component {
     constructor(props) {
         super(props);
-        //this.props.handleAuthentication(false);
     }
 
     componentDidMount() {
-        //AsyncStorage.removeItem('token');
         this.props.handleLogout();
-       /* if (!this.props.isAuthenticated) {
-            const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({routeName: 'SignInScreen'})],
-            });
-            navigation.dispatch(resetAction);
-        }*/
     }
 
     componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Body, Button, Container, Header, Icon, Left, Right, Text} from "native-base";
 import {generalStyles, BroadcastingStyles} from "../includes/styles";
-import {TouchableOpacity, View, Image} from "react-native";
+import {TouchableOpacity, View, Image, PermissionsAndroid} from "react-native";
 import RNBambuserBroadcaster from 'react-native-bambuser-broadcaster';
 import {
     saveBroadcastIdAction,
@@ -18,11 +18,40 @@ class Broadcasting extends React.Component {
         this.db = Firebase.database().ref('broadcasting');
     }
 
-    componentDidMount(): void {
-        this.timer = setTimeout(() => {
-            this.myBroadcasterRef.startBroadcast();
-        }, 1000);
+    async componentDidMount(): void {
+        const checkPermissions = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+        if (checkPermissions) {
+            this.timer = setTimeout(this.startBroadcast, 1000);
+        } else {
+            this.requestCameraPermission();
+        }
     }
+
+    requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.requestMultiple([
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            ]);
+            console.log('granted1', granted['android.permission.CAMERA']);
+            console.log('granted2', granted['android.permission.RECORD_AUDIO']);
+            console.log('granted3', granted['android.permission.ACCESS_FINE_LOCATION']);
+            if (granted['android.permission.CAMERA'] === 'granted'
+                && granted['android.permission.RECORD_AUDIO'] === 'granted'
+                && granted['android.permission.ACCESS_FINE_LOCATION'] === 'granted') {
+                this.timer = setTimeout(this.startBroadcast, 1000);
+            } else {
+                console.log('not granted bitch');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
 
     stopBroadcast = () => {
         const {
@@ -46,8 +75,7 @@ class Broadcasting extends React.Component {
     render() {
         const {
             userInfo,
-            broadcastState,
-            navigation
+            broadcastState
         } = this.props;
         return (
             <Container>
@@ -116,7 +144,15 @@ class Broadcasting extends React.Component {
                         }}>
                             <Image source={require('../assets/img/live-broadcast-icon.png')}
                                    style={{width: 18, height: 18, marginTop: 4}}/>
-                            <Text style={generalStyles.textWhite}>Cárama en línea</Text>
+                            <Text style={generalStyles.textWhite}>Cámara en línea</Text>
+                        </View>
+                    }
+                    {
+                        !broadcastState && <View style={{
+                            flexDirection: 'row',
+                            marginBottom: 10
+                        }}>
+                            <Text style={generalStyles.textWhite}>Conectando, por favor espere...</Text>
                         </View>
                     }
                     <View style={{

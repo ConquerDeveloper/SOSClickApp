@@ -586,6 +586,8 @@ function* sagaRemoveNetwork() {
         const selectedContacts = yield select(state => state.selectedItemsReducer);
         const result = yield call(removeNetwork, selectedContacts);
         const {status, response} = result[0];
+        console.warn('selected', selectedContacts);
+        console.warn(result);
         switch (status) {
             case 200:
                 Toast.show({

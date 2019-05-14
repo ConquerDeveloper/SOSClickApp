@@ -22,19 +22,28 @@ import {
     CardItem,
     Thumbnail
 } from 'native-base';
-import {generalStyles, homeStyles} from "../includes/styles";
+import {
+    generalStyles,
+    homeStyles
+} from "../includes/styles";
 import Spinner from '../includes/Spinner';
 import Swiper from 'react-native-swiper';
+import DialogCamera from '../includes/modals/DialogCamera';
 
 const {width} = Dimensions.get('window');
 
 const HomeView = props => {
     const {
         navigation,
-        spinner
+        spinner,
+        isCameraVisible
     } = props;
     return (
         <Container>
+            <DialogCamera visible={isCameraVisible}
+                          handleToggleCamera={props.handleToggleCamera}
+                          navigation={navigation}
+            />
             <Spinner visible={spinner}/>
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
@@ -64,7 +73,7 @@ const HomeView = props => {
                                 paddingRight: 20
                             }}
                             paginationStyle={{
-                               position: 'absolute',
+                                position: 'absolute',
                                 bottom: 6
                             }}
                             activeDotStyle={{
@@ -108,13 +117,14 @@ const HomeView = props => {
                     paddingRight: 20,
                     backgroundColor: '#F5F8FA'
                 }}>
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        height: 53,
-                        backgroundColor: '#D0282E',
-                        borderRadius: 4,
-                        alignSelf: 'center',
-                    }}>
+                    <TouchableOpacity onPress={() => props.handleToggleCamera(true)}
+                                      style={{
+                                          width: '100%',
+                                          height: 53,
+                                          backgroundColor: '#D0282E',
+                                          borderRadius: 4,
+                                          alignSelf: 'center',
+                                      }}>
                         <View style={generalStyles.columnCenteredContainer}>
                             <View style={{
                                 flex: 1,

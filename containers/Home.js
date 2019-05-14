@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import HomeView from '../components/HomeView';
 import {
+    toggleCameraDialogAction,
     userInfoAction
 } from '../store/Actions';
 
@@ -17,9 +18,12 @@ class Home extends React.Component {
     render() {
         const {
             navigation,
-            spinner
+            spinner,
+            isCameraVisible
         } = this.props;
         return <HomeView navigation={navigation}
+                         handleToggleCamera={this.props.handleToggleCamera}
+                         isCameraVisible={isCameraVisible}
                          spinner={spinner}
         />
     }
@@ -28,12 +32,16 @@ class Home extends React.Component {
 const mapDispatchToProps = dispatch => ({
     handleUserInfo: () => {
         dispatch(userInfoAction());
+    },
+    handleToggleCamera: bool => {
+        dispatch(toggleCameraDialogAction(bool));
     }
 });
 
 const mapStateToProps = state => ({
     isAuthenticated: state.isAuthenticatedReducer,
-    spinner: state.spinnerReducer
+    spinner: state.spinnerReducer,
+    isCameraVisible: state.toggleDialogCameraReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
