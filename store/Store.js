@@ -145,6 +145,28 @@ const toggleDialogCameraReducer = (state = false, action)=> {
     }
 };
 
+const toggleBroadcastTutorialReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.SHOW_BROADCAST_TUTORIAL:
+            return state = true;
+        case Constants.HIDE_BROADCAST_TUTORIAL:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
+const toggleModalBlockScreenReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.SHOW_MODAL_BLOCK:
+            return state = true;
+        case Constants.HIDE_MODAL_BLOCK:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -159,6 +181,8 @@ const reducers = combineReducers({
     selectedItemsReducer,
     securityNetworkReducer,
     toggleDialogCameraReducer,
+    toggleBroadcastTutorialReducer,
+    toggleModalBlockScreenReducer,
     form
 });
 

@@ -19,8 +19,7 @@ import {
     Right,
     Header,
     Card,
-    CardItem,
-    Thumbnail
+    CardItem
 } from 'native-base';
 import {
     generalStyles,

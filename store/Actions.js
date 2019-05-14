@@ -145,3 +145,11 @@ export const removeNetworkAction = () => ({
 export const toggleCameraDialogAction = bool => ({
     type: bool ? Constants.SHOW_DIALOG_CAMERA : Constants.HIDE_DIALOG_CAMERA
 });
+
+export const toggleBroadcastTutorialAction = bool => ({
+   type: bool ? Constants.SHOW_BROADCAST_TUTORIAL : Constants.HIDE_BROADCAST_TUTORIAL
+});
+
+export const toggleBlockScreenAction = bool => ({
+    type: bool ? Constants.SHOW_MODAL_BLOCK : Constants.HIDE_MODAL_BLOCK
+});
