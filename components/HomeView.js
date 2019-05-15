@@ -43,7 +43,10 @@ const HomeView = props => {
                           handleToggleCamera={props.handleToggleCamera}
                           navigation={navigation}
             />
-            <Spinner visible={spinner}/>
+            <Spinner visible={spinner}
+                     animated
+                     StatusBarAnimation={'slide'}
+            />
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>

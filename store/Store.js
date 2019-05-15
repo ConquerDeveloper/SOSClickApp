@@ -167,6 +167,17 @@ const toggleModalBlockScreenReducer = (state = false, action) => {
     }
 };
 
+const toggleConfigurationModalReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.SHOW_CONFIG_MODAL:
+            return state = true;
+        case Constants.HIDE_CONFIG_MODAL:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -183,6 +194,7 @@ const reducers = combineReducers({
     toggleDialogCameraReducer,
     toggleBroadcastTutorialReducer,
     toggleModalBlockScreenReducer,
+    toggleConfigurationModalReducer,
     form
 });
 

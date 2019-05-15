@@ -153,3 +153,7 @@ export const toggleBroadcastTutorialAction = bool => ({
 export const toggleBlockScreenAction = bool => ({
     type: bool ? Constants.SHOW_MODAL_BLOCK : Constants.HIDE_MODAL_BLOCK
 });
+
+export const toggleConfigurationModal = bool => ({
+    type: bool ? Constants.SHOW_CONFIG_MODAL : Constants.HIDE_CONFIG_MODAL
+});

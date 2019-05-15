@@ -3,9 +3,11 @@ import {
     Modal,
     View,
     StyleSheet,
-    TouchableOpacity
+    Dimensions
 } from "react-native";
 import {generalStyles} from "../styles";
+
+const {height} = Dimensions.get('window');
 
 const ModalBlockedScreen = props => {
     const {
@@ -18,7 +20,8 @@ const ModalBlockedScreen = props => {
             visible={visible}>
             <View style={{
                 backgroundColor: '#000',
-                ...StyleSheet.absoluteFillObject
+                ...StyleSheet.absoluteFillObject,
+                height
             }} onStartShouldSetResponder={() => props.handleToggleBlock(false)}/>
         </Modal>
     )

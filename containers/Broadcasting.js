@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
     Body,
-    Button,
     Container,
     Header,
     Icon,
@@ -20,14 +19,15 @@ import {
     Image,
     PermissionsAndroid,
     Dimensions,
-    StyleSheet
+    StatusBar
 } from "react-native";
 import RNBambuserBroadcaster from 'react-native-bambuser-broadcaster';
 import {
     saveBroadcastIdAction,
     broadcastStateAction,
     toggleBroadcastTutorialAction,
-    toggleBlockScreenAction
+    toggleBlockScreenAction,
+    toggleConfigurationModal
 } from '../store/Actions';
 import {
     NavigationActions,
@@ -36,6 +36,7 @@ import {
 import Firebase from 'react-native-firebase';
 import Swiper from 'react-native-swiper';
 import ModalBlockedScreen from '../includes/modals/ModalBlockedScreen';
+import ModalConfigurationBroadcast from '../includes/modals/ModalConfigurationBroadcast';
 
 const {width, height} = Dimensions.get('window');
 
@@ -46,6 +47,7 @@ class Broadcasting extends React.Component {
     }
 
     async componentDidMount(): void {
+        StatusBar.setHidden(true);
         const checkPermissions = await PermissionsAndroid.check(
             PermissionsAndroid.PERMISSIONS.CAMERA,
             PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
@@ -93,7 +95,8 @@ class Broadcasting extends React.Component {
             userInfo,
             broadcastState,
             isTutorialVisible,
-            isModalBlockVisible
+            isModalBlockVisible,
+            isConfigModalVisible
         } = this.props;
         return (
             <Container>
@@ -101,7 +104,8 @@ class Broadcasting extends React.Component {
                 <ModalBlockedScreen visible={isModalBlockVisible}
                                     handleToggleBlock={this.props.handleToggleBlock}
                 />
-
+                <ModalConfigurationBroadcast visible={isConfigModalVisible}
+                                             handleToggleConfigurationModal={this.props.handleToggleConfigurationModal}/>
                 <Header style={generalStyles.headerContainer}
                         androidStatusBarColor="#822120"
                         noShadow>
@@ -121,6 +125,7 @@ class Broadcasting extends React.Component {
                 }} applicationId={'AEI3qY0EhtPUWiyg28UV3A'}
                                        title={`${userInfo.usuario.nombre}`}
                                        style={BroadcastingStyles.bambuserContainer}
+                                       audioQuality={RNBambuserBroadcaster.AUDIO_QUALITY.HIGH}
                                        onBroadcastStarted={() => this.props.handleBroadcastState(true)}
                                        onBroadcastIdReceived={broadcastId => {
                                            this.props.handleBroadcastId(broadcastId);
@@ -195,7 +200,8 @@ class Broadcasting extends React.Component {
                         alignSelf: 'center',
                         marginBottom: 20
                     }}>
-                        <TouchableOpacity style={{marginRight: 40}}>
+                        <TouchableOpacity style={{marginRight: 40}}
+                                          onPress={() => this.props.handleToggleConfigurationModal(true)}>
                             <Image source={require('../assets/img/config-icon.png')}
                                    style={BroadcastingStyles.configIcon}
                             />
@@ -425,6 +431,7 @@ class Broadcasting extends React.Component {
     }
 
     componentWillUnmount(): void {
+        StatusBar.setHidden(false);
         this.props.handleBroadcastState(false);
         clearTimeout(this.timer);
     }
@@ -442,6 +449,9 @@ const mapDispatchToProps = dispatch => ({
     },
     handleToggleBlock: bool => {
         dispatch(toggleBlockScreenAction(bool));
+    },
+    handleToggleConfigurationModal: bool => {
+        dispatch(toggleConfigurationModal(bool));
     }
 });
 
@@ -450,7 +460,8 @@ const mapStateToProps = state => ({
     broadcastId: state.broadcastReducer,
     broadcastState: state.broadcastStateReducer,
     isTutorialVisible: state.toggleBroadcastTutorialReducer,
-    isModalBlockVisible: state.toggleModalBlockScreenReducer
+    isModalBlockVisible: state.toggleModalBlockScreenReducer,
+    isConfigModalVisible: state.toggleConfigurationModalReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Broadcasting);
