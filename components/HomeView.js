@@ -243,53 +243,57 @@ const HomeView = props => {
                                 height: 110,
                                 borderRadius: 7
                             }}>
-                                <CardItem style={{
-                                    borderRadius: 7,
-                                    paddingLeft: 0,
-                                    paddingRight: 0
-                                }}>
-                                    <Left>
-                                        <View style={{
-                                            flexDirection: 'column',
-                                            alignItems: 'flex-start',
-                                            flex: 1,
-                                            justifyContent: 'flex-start',
-                                            alignSelf: 'flex-start'
-                                        }}>
-                                            <Text style={{
-                                                fontFamily: 'UniSansRegular',
-                                                fontSize: 11,
-                                                color: '#606A75',
+                                <TouchableOpacity onPress={() => navigation.navigate('DVRCameraScreen')}>
+                                    <CardItem style={{
+                                        borderRadius: 7,
+                                        paddingLeft: 0,
+                                        paddingRight: 0
+                                    }}>
+                                        <Left>
+                                            <View style={{
+                                                flexDirection: 'column',
+                                                alignItems: 'flex-start',
+                                                flex: 1,
+                                                justifyContent: 'flex-start',
                                                 alignSelf: 'flex-start'
-                                            }}>Sala 1</Text>
-                                            <Text style={{
-                                                fontSize: 7,
-                                                fontFamily: 'UniSansRegular',
-                                                color: '#92A0B1',
-                                                alignSelf: 'flex-start'
-                                            }}>Principal</Text>
-                                        </View>
-                                    </Left>
-                                    <Right>
-                                        <Icon type={'Ionicons'}
-                                              name={'eye'}
+                                            }}>
+                                                <Text style={{
+                                                    fontFamily: 'UniSansRegular',
+                                                    fontSize: 11,
+                                                    color: '#606A75',
+                                                    alignSelf: 'flex-start'
+                                                }}>Sala 1</Text>
+                                                <Text style={{
+                                                    fontSize: 7,
+                                                    fontFamily: 'UniSansRegular',
+                                                    color: '#92A0B1',
+                                                    alignSelf: 'flex-start'
+                                                }}>Principal</Text>
+                                            </View>
+                                        </Left>
+                                        <Right>
+                                            <Icon type={'Ionicons'}
+                                                  name={'eye'}
+                                                  style={{
+                                                      color: '#92A0B1',
+                                                      fontSize: 11,
+                                                      marginRight: 10
+                                                  }}
+                                            />
+                                        </Right>
+                                    </CardItem>
+                                    <CardItem cardBody
                                               style={{
-                                                  color: '#92A0B1',
-                                                  fontSize: 11,
-                                                  marginRight: 10
-                                              }}
-                                        />
-                                    </Right>
-                                </CardItem>
-                                <CardItem cardBody
-                                          style={{
-                                              borderRadius: 7
-                                          }}>
-                                    <Image source={require('../assets/img/monitoring-test.jpg')}
+                                                  borderRadius: 7
+                                              }}>
+                                        <Image source={require('../assets/img/monitoring-test.jpg')}
 
-                                    />
-                                </CardItem>
+                                        />
+                                    </CardItem>
+                                </TouchableOpacity>
                             </Card>
+
+
                             <Card style={{
                                 width: 133,
                                 height: 110,

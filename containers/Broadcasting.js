@@ -47,7 +47,7 @@ class Broadcasting extends React.Component {
     }
 
     async componentDidMount(): void {
-        StatusBar.setHidden(true);
+        //StatusBar.setHidden(true);
         const checkPermissions = await PermissionsAndroid.check(
             PermissionsAndroid.PERMISSIONS.CAMERA,
             PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
@@ -431,7 +431,7 @@ class Broadcasting extends React.Component {
     }
 
     componentWillUnmount(): void {
-        StatusBar.setHidden(false);
+        //StatusBar.setHidden(false);
         this.props.handleBroadcastState(false);
         clearTimeout(this.timer);
     }

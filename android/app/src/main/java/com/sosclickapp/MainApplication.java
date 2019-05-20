@@ -16,6 +16,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
+import com.yuanzhou.vlc.ReactVlcPlayerPackage;
+import com.github.yamill.orientation.OrientationPackage;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +43,9 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeContacts(),
             new RNFirebaseNotificationsPackage(),
             new RNFirebaseMessagingPackage(),
-            new RNFirebaseDatabasePackage()
+            new RNFirebaseDatabasePackage(),
+            new ReactVlcPlayerPackage(),
+            new OrientationPackage()
       );
     }
 

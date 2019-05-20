@@ -28,6 +28,8 @@ const ModalConfigurationBroadcast = props => {
         <Modal
             animationType="slide"
             visible={visible}>
+            <StatusBar barStyle={'light-content'}
+                       backgroundColor={'#822120'}/>
             <Container style={{
                 height,
                 width,
@@ -35,7 +37,7 @@ const ModalConfigurationBroadcast = props => {
             }}>
                 <Header style={{
                     backgroundColor: '#D0282E'
-                }}>
+                }}   androidStatusBarColor="#822120">
                     <Left style={{flex: 1, zIndex: 9999}}>
                         <Button transparent
                                 onPress={() => props.handleToggleConfigurationModal(false)}>

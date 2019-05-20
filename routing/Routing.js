@@ -19,6 +19,7 @@ import SecurityNetwork from '../containers/SecurityNetwork';
 import ContactsNetwork from '../containers/ContactsNetwork';
 import UserProfile from '../containers/UserProfile';
 import RemoveSecurityNetwork from '../containers/RemoveSecurityNetwork';
+import DVRCamera from '../containers/DVRCamera';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -118,6 +119,12 @@ const Routing = createStackNavigator({
     },
     RemoveSecurityNetworkScreen: {
         screen: RemoveSecurityNetwork,
+        navigationOptions: {
+            header: null
+        }
+    },
+    DVRCameraScreen: {
+        screen: DVRCamera,
         navigationOptions: {
             header: null
         }

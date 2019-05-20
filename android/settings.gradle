@@ -1,4 +1,6 @@
 rootProject.name = 'SOSClickApp'
+include ':react-native-yz-vlcplayer'
+project(':react-native-yz-vlcplayer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-yz-vlcplayer/android')
 include ':react-native-firebase'
 project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
 include ':react-native-image-crop-picker'
@@ -11,5 +13,7 @@ include ':react-native-gesture-handler', ':libbambuser-0.9.17', ':libbambuser'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':react-native-contacts'
 project(':react-native-contacts').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-contacts/android')
+include ':react-native-orientation', ':app'
+project(':react-native-orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')
 
 include ':app'
