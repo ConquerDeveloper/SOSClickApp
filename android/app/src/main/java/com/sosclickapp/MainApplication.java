@@ -18,6 +18,7 @@ import com.facebook.soloader.SoLoader;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.yuanzhou.vlc.ReactVlcPlayerPackage;
 import com.github.yamill.orientation.OrientationPackage;
+import org.reactnative.camera.RNCameraPackage;
 
 
 import java.util.Arrays;
@@ -45,7 +46,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseMessagingPackage(),
             new RNFirebaseDatabasePackage(),
             new ReactVlcPlayerPackage(),
-            new OrientationPackage()
+            new OrientationPackage(),
+            new RNCameraPackage()
       );
     }
 

@@ -25,7 +25,9 @@ import {
     selectedAction,
     deselectAction,
     saveSecurityNetwork,
-    addNewContactAction
+    addNewContactAction,
+    cleanSelectedAction,
+    removeContactAction
 } from "../Actions";
 import ImagePicker from 'react-native-image-crop-picker';
 import Contacts from "react-native-contacts";
@@ -565,7 +567,7 @@ function* sagaSelectedRemove() {
     yield put(isSelectedAction(array));
 }
 
-const removeNetwork = async array => {
+const removeNetwork = async id_seguridad => {
     const token = await AsyncStorage.getItem('token');
     const response = await fetch(Constants.REMOVE_NETWORK_API, {
         headers: {
@@ -575,25 +577,35 @@ const removeNetwork = async array => {
         },
         method: 'POST',
         body: JSON.stringify({
-            ...array
+            id_seguridad
         })
     });
     return Promise.all([{status: await response.status, response: await response.json()}])
 };
 
 function* sagaRemoveNetwork() {
+    yield put(spinnerAction(true));
     try {
         const selectedContacts = yield select(state => state.selectedItemsReducer);
-        const result = yield call(removeNetwork, selectedContacts);
+        const idArray = selectedContacts.map(item => item.id_seguridad);
+        const securityNetwork = yield select(state => state.securityNetworkReducer);
+        const data = securityNetwork.filter((item1, index) =>
+            !selectedContacts.some(item2 => {
+                return (item2.id === item1.id)
+            }));
+        const result = yield call(removeNetwork, idArray);
         const {status, response} = result[0];
         console.warn('selected', selectedContacts);
         console.warn(result);
+        console.warn('remover', data);
         switch (status) {
             case 200:
                 Toast.show({
                     text: response.mensaje,
                     buttonText: 'OK'
                 });
+                yield put(removeContactAction(data));
+                yield put(cleanSelectedAction());
                 yield put(goBackAction(true));
                 break;
             case 421:
@@ -606,7 +618,41 @@ function* sagaRemoveNetwork() {
     } catch (e) {
         console.log(e);
     }
+    yield put(spinnerAction(false));
 }
+
+const requestSendAlert = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.SEND_ALERT_API, {
+        headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'GET'
+    });
+    return Promise.all([{status: await response.status, response: await response.json()}]);
+};
+
+function* sagaSendAlert() {
+    yield put(spinnerAction(true));
+    try {
+        const result = yield call(requestSendAlert);
+        console.log('result', result);
+        const {status, response} = result[0];
+        switch (status) {
+            case 200:
+                Toast.show({
+                    text: 'Ha enviado una alerta a su red de seguridad',
+                    buttonText: 'OK'
+                });
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+};
 
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
@@ -623,4 +669,5 @@ export default function* Generator() {
     yield takeEvery(Constants.LOAD_SECURITY_NETWORK, sagaLoadSecurityNetwork);
     yield takeEvery(Constants.IS_SELECTED_REMOVE, sagaSelectedRemove);
     yield takeEvery(Constants.REMOVE_NETWORK, sagaRemoveNetwork);
+    yield takeEvery(Constants.SEND_ALERT, sagaSendAlert);
 }

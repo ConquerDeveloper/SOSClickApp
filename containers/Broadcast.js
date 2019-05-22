@@ -1,20 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-    PermissionsAndroid,
-    Dimensions,
-    TouchableOpacity,
-    View
+    PermissionsAndroid
 } from 'react-native';
 import {
-    Text,
-    Container, Header, Left, Button, Icon, Body, Title, Right
-} from 'native-base';
-import {generalStyles} from "../includes/styles";
-import {NavigationActions, StackActions} from "react-navigation";
-
-
-const {width, height} = Dimensions.get('window');
+    withNavigationFocus
+} from 'react-navigation';
+import BroadcastView from "../components/BroadcastView";
 
 class Broadcast extends React.Component {
     constructor(props) {
@@ -22,7 +14,7 @@ class Broadcast extends React.Component {
     }
 
     componentDidMount(): void {
-        return this.requestCameraPermission();
+        //return this.requestCameraPermission();
     }
 
     requestCameraPermission = async () => {
@@ -30,7 +22,9 @@ class Broadcast extends React.Component {
             const granted = await PermissionsAndroid.requestMultiple([
                 PermissionsAndroid.PERMISSIONS.CAMERA,
                 PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
             ]);
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 console.log('You can use the camera');
@@ -44,16 +38,20 @@ class Broadcast extends React.Component {
 
     render() {
         const {navigation} = this.props;
+        if (!navigation.isFocused()) {
+            return null;
+        }
         return (
-            <Container>
-                <View style={generalStyles.columnCenteredContainer}>
-                    <Button onPress={() => navigation.navigate('BroadcastingScreen')}>
-                        <Text>Transmitir</Text>
-                    </Button>
-                </View>
-            </Container>
+            <BroadcastView navigation={navigation}
+                           camera={this.camera}
+            />
         );
+    }
+
+    componentWillUnmount() {
+        this.camera = null;
+        return null;
     }
 }
 
-export default connect()(Broadcast);
+export default connect()(withNavigationFocus(Broadcast));

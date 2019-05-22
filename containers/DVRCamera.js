@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { VLCPlayer, VlcSimplePlayer } from 'react-native-yz-vlcplayer';
-import Orientation from 'react-native-orientation';
+import DVRCameraView from '../components/DVRCameraView';
 import {
-    Container
-} from 'native-base';
+    toggleAlertDialogAction,
+    sendAlertAction
+} from "../store/Actions";
 
 
 class DVRCamera extends React.Component {
@@ -13,22 +13,38 @@ class DVRCamera extends React.Component {
     }
 
     render() {
+        const {
+            navigation,
+            isAlertDialogVisible,
+            spinner
+        } = this.props;
         return (
-            <Container>
-                <VlcSimplePlayer
-                    style={{width:'100%'}}
-                    url={"rtsp://admin:camdie00@190.196.70.170:554/onvif1"}
-                    Orientation={Orientation}
-                    onStartFullScreen={this.onStartFullScreen}
-                    onCloseFullScreen={this.onCloseFullScreen}
-                />
-            </Container>
+            <DVRCameraView navigation={navigation}
+                           isAlertDialogVisible={isAlertDialogVisible}
+                           spinner={spinner}
+                           handleSendAlert={this.props.handleSendAlert}
+                           handleAlertDialog={this.props.handleAlertDialog}
+            />
         )
+    }
+
+    componentWillUnmount(): void {
+        this.props.handleAlertDialog(false);
     }
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    handleAlertDialog: bool => {
+        dispatch(toggleAlertDialogAction(bool))
+    },
+    handleSendAlert: () => {
+        dispatch(sendAlertAction());
+    }
+});
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    isAlertDialogVisible: state.toggleAlertDialogReducer,
+    spinner: state.spinnerReducer
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DVRCamera);

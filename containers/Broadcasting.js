@@ -75,7 +75,7 @@ class Broadcasting extends React.Component {
                 && granted['android.permission.ACCESS_FINE_LOCATION'] === 'granted') {
                 this.timer = setTimeout(this.startBroadcast, 1000);
             } else {
-                console.log('not granted bitch');
+                console.log('not granted');
             }
         } catch (err) {
             console.warn(err);

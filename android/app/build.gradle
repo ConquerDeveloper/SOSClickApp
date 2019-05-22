@@ -115,6 +115,8 @@ android {
          renderscriptTargetApi 23
          renderscriptSupportModeEnabled true
          vectorDrawables.useSupportLibrary = true
+         missingDimensionStrategy 'react-native-camera', 'general'
+         multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -170,6 +172,7 @@ dependencies {
     // From node_modules
     implementation project(':libbambuser')
     implementation project(':react-native-contacts')
+    implementation project(':react-native-camera')
 
 
       // Firebase dependencies

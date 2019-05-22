@@ -313,3 +313,17 @@ export const BroadcastingStyles = StyleSheet.create({
         height: 48
     }
 });
+
+export const DVRStyles = StyleSheet.create({
+    camera: {
+        width,
+        marginTop: 50
+    }
+});
+
+export const BroadcastStyles = StyleSheet.create({
+    camera: {
+        width,
+        height
+    }
+});

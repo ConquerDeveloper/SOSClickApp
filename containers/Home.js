@@ -5,15 +5,39 @@ import {
     toggleCameraDialogAction,
     userInfoAction
 } from '../store/Actions';
+import {PermissionsAndroid} from "react-native";
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount(): void {
+    async componentDidMount(): void {
+        const checkPermissions = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+        if (checkPermissions) {
+            console.log('granted')
+        } else {
+            this.requestLocationPermissions();
+        }
         this.props.handleUserInfo();
     }
+
+    requestLocationPermissions = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+               console.log('granted')
+            } else {
+                console.log('not granted');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
 
     render() {
         const {

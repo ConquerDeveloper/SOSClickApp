@@ -11,6 +11,7 @@ const Constants = {
     SAVE_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/crear',
     LOAD_SECURITY_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/lista',
     REMOVE_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/eliminar',
+    SEND_ALERT_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/alerta',
     SIGN_UP: 'SIGN_UP',
     SHOW_SPINNER: 'SHOW_SPINNER',
     HIDE_SPINNER: 'HIDE_SPINNER',
@@ -54,7 +55,11 @@ const Constants = {
     SHOW_MODAL_BLOCK: 'SHOW_MODAL_BLOCK',
     HIDE_MODAL_BLOCK: 'HIDE_MODAL_BLOCK',
     SHOW_CONFIG_MODAL: 'SHOW_CONFIG_MODAL',
-    HIDE_CONFIG_MODAL: 'HIDE_CONFIG_MODAL'
+    HIDE_CONFIG_MODAL: 'HIDE_CONFIG_MODAL',
+    SHOW_ALERT_DIALOG: 'SHOW_ALERT_DIALOG',
+    HIDE_ALERT_DIALOG: 'HIDE_ALERT_DIALOG',
+    REMOVE_SECURITY_NETWORK_CONTACT: 'REMOVE_SECURITY_NETWORK_CONTACT',
+    SEND_ALERT: 'SEND_ALERT'
 };
 
 export default Constants;

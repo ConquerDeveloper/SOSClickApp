@@ -157,3 +157,16 @@ export const toggleBlockScreenAction = bool => ({
 export const toggleConfigurationModal = bool => ({
     type: bool ? Constants.SHOW_CONFIG_MODAL : Constants.HIDE_CONFIG_MODAL
 });
+
+export const toggleAlertDialogAction = bool => ({
+    type: bool ? Constants.SHOW_ALERT_DIALOG : Constants.HIDE_ALERT_DIALOG
+});
+
+export const removeContactAction = array => ({
+    type: Constants.REMOVE_SECURITY_NETWORK_CONTACT,
+    array
+});
+
+export const sendAlertAction = () => ({
+    type: Constants.SEND_ALERT
+});

@@ -129,6 +129,8 @@ const securityNetworkReducer = (state = [], action) => {
             return state = action.array;
         case Constants.ADD_NEW_CONTACT:
             return state = [...state, ...action.array];
+        case Constants.REMOVE_SECURITY_NETWORK_CONTACT:
+            return state = [...action.array];
         default:
             return state;
     }
@@ -178,6 +180,17 @@ const toggleConfigurationModalReducer = (state = false, action) => {
     }
 };
 
+const toggleAlertDialogReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.SHOW_ALERT_DIALOG:
+            return state = true;
+        case Constants.HIDE_ALERT_DIALOG:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -195,6 +208,7 @@ const reducers = combineReducers({
     toggleBroadcastTutorialReducer,
     toggleModalBlockScreenReducer,
     toggleConfigurationModalReducer,
+    toggleAlertDialogReducer,
     form
 });
 
