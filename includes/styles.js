@@ -327,3 +327,85 @@ export const BroadcastStyles = StyleSheet.create({
         height
     }
 });
+
+export const ComplaintStyles = StyleSheet.create({
+    profilePic: {
+        width: 88,
+        height: 87,
+        borderRadius: 16,
+        alignSelf: 'center'
+    },
+    container: {
+        marginVertical: 20,
+        paddingHorizontal: 20,
+        flex: 1,
+        flexDirection: 'column'
+    },
+    headerTitle: {
+        fontFamily: 'UniSansRegular',
+        color: '#78849E',
+        marginVertical: 20,
+        fontSize: 14,
+        textAlign: 'center'
+    },
+    recordButton: {
+        alignSelf: 'center',
+        backgroundColor: '#D0282E',
+        borderRadius: 12,
+        paddingVertical: 15,
+        paddingHorizontal: 80
+    },
+    buttonText: {
+        fontFamily: 'UniSansRegular',
+        fontSize: 14,
+        color: '#fff'
+    },
+    textArea: {
+        marginTop: 30,
+        fontFamily: 'UniSansRegular',
+        fontSize: 14
+    },
+    sendButton: {
+        paddingHorizontal: 50,
+        alignSelf: 'center',
+        marginTop: 20,
+        backgroundColor: '#606A75',
+        paddingVertical: 10,
+        borderRadius: 8
+    },
+    sendText: {
+        color: '#fff',
+        fontFamily: 'UniSansRegular',
+        fontSize: 14
+    },
+    camera: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    recordIcon: {
+        width: 70,
+        height: 70,
+        alignSelf: 'center'
+    },
+    footerCamera: {
+        backgroundColor: 'rgba(0, 0, 0, .3)',
+        width,
+        paddingVertical: 20
+    },
+    recordText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontFamily: 'UniSansRegular',
+        marginTop: 10
+    },
+    header: {
+        width,
+        backgroundColor: 'rgba(0, 0, 0, .3)',
+        paddingVertical: 10
+    },
+    arrowIcon: {
+        color: '#fff',
+        marginLeft: 10
+    }
+});

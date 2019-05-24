@@ -26,7 +26,7 @@ const FooterView = props => {
                     <Text style={footerStyles.footerText}>INICIO</Text>
                 </Button>
                 <Button vertical
-                        onPress={() => navigation.navigate('BroadcastScreen')}>
+                        onPress={() => navigation.navigate('BroadcastingScreen')}>
                     <Image source={require('../assets/img/broadcast-icon.png')}
                            style={footerStyles.iconImg}/>
                     <Text style={footerStyles.footerText}>TRANSMITIR</Text>

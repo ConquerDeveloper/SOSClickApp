@@ -170,3 +170,12 @@ export const removeContactAction = array => ({
 export const sendAlertAction = () => ({
     type: Constants.SEND_ALERT
 });
+
+export const toggleRecordAction = bool => ({
+    type: bool ? Constants.START_RECORD : Constants.STOP_RECORD
+});
+
+export const saveUriAction = uri => ({
+    type: Constants.SAVE_URI_VIDEO,
+    uri
+});

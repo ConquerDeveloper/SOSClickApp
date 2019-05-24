@@ -20,6 +20,9 @@ import ContactsNetwork from '../containers/ContactsNetwork';
 import UserProfile from '../containers/UserProfile';
 import RemoveSecurityNetwork from '../containers/RemoveSecurityNetwork';
 import DVRCamera from '../containers/DVRCamera';
+import Complaint from '../containers/Complaint';
+import ComplaintCamera from '../containers/ComplaintCamera';
+import PreviewVideo from '../containers/PreviewVideo';
 
 const MyDrawerNavigator = createDrawerNavigator({
         WelcomeScreen: {
@@ -125,6 +128,24 @@ const Routing = createStackNavigator({
     },
     DVRCameraScreen: {
         screen: DVRCamera,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ComplaintScreen: {
+        screen: Complaint,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ComplaintCameraScreen: {
+        screen: ComplaintCamera,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PreviewVideoScreen: {
+        screen: PreviewVideo,
         navigationOptions: {
             header: null
         }

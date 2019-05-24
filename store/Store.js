@@ -191,6 +191,26 @@ const toggleAlertDialogReducer = (state = false, action) => {
     }
 };
 
+const isRecordingReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.START_RECORD:
+            return state = true;
+        case Constants.STOP_RECORD:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
+const saveUriReducer = (state = null, action) => {
+    switch (action.type) {
+        case Constants.SAVE_URI_VIDEO:
+            return state = action.uri;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -209,6 +229,8 @@ const reducers = combineReducers({
     toggleModalBlockScreenReducer,
     toggleConfigurationModalReducer,
     toggleAlertDialogReducer,
+    isRecordingReducer,
+    saveUriReducer,
     form
 });
 
