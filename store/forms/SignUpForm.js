@@ -47,7 +47,6 @@ const SignUpForm = props => {
             <Field name='nombre'
                    placeholder='Nombre'
                    autocapitalize='words'
-                   keyboardtype='none'
                    component={formField}
             />
             <Field name='email'

@@ -179,3 +179,11 @@ export const saveUriAction = uri => ({
     type: Constants.SAVE_URI_VIDEO,
     uri
 });
+
+export const cleanUriAction = () => ({
+    type: Constants.CLEAN_URI_VIDEO
+});
+
+export const sendComplaintAction = () => ({
+    type: Constants.SEND_COMPLAINT
+});

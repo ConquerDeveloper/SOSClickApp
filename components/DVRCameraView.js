@@ -60,7 +60,7 @@ const DVRCameraView = props => {
             <View style={generalStyles.columnCenteredContainer}>
                 <VlcSimplePlayer
                     style={DVRStyles.camera}
-                    url={"rtsp://admin:camdie00@190.196.70.170:554/onvif1"}
+                    url={"rtsp://admin:caco0458@190.196.70.170:554/onvif1"}
                     autoplay={true}
                     Orientation={Orientation}
                     onStartFullScreen={this.onStartFullScreen}

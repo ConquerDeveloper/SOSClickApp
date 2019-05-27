@@ -19,16 +19,19 @@ import {
     generalStyles,
     ComplaintStyles
 } from "../includes/styles";
+import Spinner from '../includes/Spinner';
 
 
 const ComplaintView = props => {
     const {
         navigation,
-        userInfo
+        userInfo,
+        videoMessage,
+        spinner
     } = props;
-    console.warn('userInfo', userInfo);
     return (
         <Container>
+            <Spinner visible={spinner}/>
             <Header style={generalStyles.headerContainer}
                     androidStatusBarColor="#822120"
                     noShadow>
@@ -46,18 +49,31 @@ const ComplaintView = props => {
                        style={ComplaintStyles.profilePic}/>
                 <Text
                     style={ComplaintStyles.headerTitle}>{`Escribe o graba una denuncia y la enviaremos a un centro de seguridad para poder asistirte.`}</Text>
-                <TouchableOpacity style={ComplaintStyles.recordButton}
-                                  onPress={() => navigation.navigate('ComplaintCameraScreen')}
-                >
-                    <Text style={ComplaintStyles.buttonText}>Grabar denuncia (opcional)</Text>
-                </TouchableOpacity>
+                {
+                    !videoMessage ?
+                        <TouchableOpacity style={ComplaintStyles.recordButton}
+                                          onPress={() => navigation.navigate('ComplaintCameraScreen')}
+                        >
+                            <Text style={ComplaintStyles.buttonText}>Grabar denuncia (opcional)</Text>
+                        </TouchableOpacity> :
+                        <View>
+                            <Text style={{
+                                textAlign: 'center',
+                                color: '#92A0B1',
+                                fontFamily: 'UniSansRegular',
+                                fontSize: 14,
+                                marginTop: 10
+                            }}>{`${videoMessage}`}</Text>
+                        </View>
+                }
                 <Textarea rowSpan={5}
                           bordered
                           placeholder="Escribe tu denuncia"
-                          placeholderTextColor={'#454F63'}
+                          placeholderTextColor={'#92A0B1'}
                           style={ComplaintStyles.textArea}
                 />
-                <TouchableOpacity style={ComplaintStyles.sendButton}>
+                <TouchableOpacity style={ComplaintStyles.sendButton}
+                                  onPress={props.handleSendComplaint}>
                     <Text style={ComplaintStyles.sendText}>ENVIAR</Text>
                 </TouchableOpacity>
             </View>

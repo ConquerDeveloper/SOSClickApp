@@ -407,5 +407,9 @@ export const ComplaintStyles = StyleSheet.create({
     arrowIcon: {
         color: '#fff',
         marginLeft: 10
+    },
+    videoPreview: {
+        width,
+        height
     }
 });

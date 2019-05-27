@@ -2,7 +2,8 @@ import React from 'react';
 import {
     View,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import {
     Text,
@@ -14,11 +15,14 @@ import {
 } from "../includes/styles";
 import {RNCamera} from 'react-native-camera';
 
+const {width} = Dimensions.get('window');
+
 
 const ComplaintCameraView = props => {
     const {
         navigation,
-        isRecording
+        isRecording,
+        countdown
     } = props;
     return (
         <Container style={{flex: 1}}>
@@ -45,12 +49,34 @@ const ComplaintCameraView = props => {
                     alignItems: 'center',
                     justifyContent: 'flex-start'
                 }}>
-                    <View style={ComplaintStyles.header}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <View style={{
+                        flexDirection: 'row',
+                        width,
+                        backgroundColor: 'rgba(0, 0, 0, .3)',
+                        paddingVertical: 10
+                    }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}
+                        style={{
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                            flex: 1
+                        }}>
                             <Icon name={'arrow-back'}
                                   style={ComplaintStyles.arrowIcon}
                             />
                         </TouchableOpacity>
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flex: 1
+                        }}>
+                            <Text style={{
+                                textAlign: 'center',
+                                alignSelf: 'center',
+                                color: '#fff'
+                            }}>{countdown}</Text>
+                        </View>
+                        <View style={{flex: 1}}/>
                     </View>
                 </View>
                 <View style={{

@@ -5,7 +5,8 @@ import {
     Icon
 } from "native-base";
 import {
-    Image
+    Image,
+    StatusBar
 } from 'react-native';
 import {generalStyles} from "../includes/styles";
 
@@ -34,6 +35,7 @@ export default class OnBoardingIntro extends React.Component {
     render() {
         return (
             <Onboarding
+                controlStatusBar={true}
                 nextLabel='Siguiente'
                 skipLabel='Saltar'
                 DoneButtonComponent={this.Ok}

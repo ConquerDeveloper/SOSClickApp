@@ -27,7 +27,7 @@ import {
     saveSecurityNetwork,
     addNewContactAction,
     cleanSelectedAction,
-    removeContactAction
+    removeContactAction, cleanUriAction
 } from "../Actions";
 import ImagePicker from 'react-native-image-crop-picker';
 import Contacts from "react-native-contacts";
@@ -652,7 +652,76 @@ function* sagaSendAlert() {
         console.log(e);
     }
     yield put(spinnerAction(false));
+}
+
+const requestSendComplaint = async uri => {
+   /* const token = await AsyncStorage.getItem('token');
+    const response = await fetch(Constants.SEND_COMPLAINT_API, {
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+
+        })
+    });*/
+    const token = await AsyncStorage.getItem('token');
+    const split = uri.split('/');
+    const fileName = [...split].pop();
+    const video = {
+        uri,
+        type: '	video/mpeg',
+        name: fileName
+    };
+    const formData = new FormData();
+    formData.append('upload_preset', Constants.CLOUDINARY_PRESET);
+    formData.append('file', video);
+    const response = await fetch(Constants.CLOUDINARY_VIDEO_NAME, {
+        headers: {
+            'Accept': 'application/x-www-form-urlencoded',
+            'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        body: formData
+    });
+    const cloudinaryResponse = await response.json();
+    const responseComplaint = await fetch(Constants.SEND_COMPLAINT_API, {
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            url: cloudinaryResponse.secure_url
+        })
+    });
+    return Promise.all([{status: await responseComplaint.status, response: await responseComplaint.json()}])
 };
+
+function* sagaSendComplaint() {
+    yield put(spinnerAction(true));
+    try {
+        const uri = yield select(state => state.saveUriReducer);
+        const result = yield call(requestSendComplaint, uri);
+        const {status} = result[0];
+        switch (status) {
+            case 200:
+                yield put(cleanUriAction());
+                Toast.show({
+                    text: 'Su denuncia ha sido enviada a nuestros centros de seguridad.',
+                    buttonText: 'OK',
+                    duration: 5000
+                });
+                break;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+    yield put(spinnerAction(false));
+}
 
 export default function* Generator() {
     yield takeEvery(Constants.SIGN_UP, sagaSignUp);
@@ -670,4 +739,5 @@ export default function* Generator() {
     yield takeEvery(Constants.IS_SELECTED_REMOVE, sagaSelectedRemove);
     yield takeEvery(Constants.REMOVE_NETWORK, sagaRemoveNetwork);
     yield takeEvery(Constants.SEND_ALERT, sagaSendAlert);
+    yield takeEvery(Constants.SEND_COMPLAINT, sagaSendComplaint);
 }

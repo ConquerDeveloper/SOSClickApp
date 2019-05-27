@@ -28,6 +28,7 @@
     "react-native-simple-dialogs": "^1.1.0",
     "react-native-slider": "^0.11.0",
     "react-native-swiper": "^1.5.14",
+    "react-native-video": "^4.4.1",
     "react-native-yz-vlcplayer": "^1.1.1-beta7",
     "react-navigation": "^3.8.1",
     "react-redux": "^7.0.2",

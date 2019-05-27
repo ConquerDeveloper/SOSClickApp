@@ -1,6 +1,7 @@
 const Constants = {
     CLOUDINARY_PRESET: 'r62k0ahs',
     CLOUDINARY_NAME: 'https://api.cloudinary.com/v1_1/dsdrqyeh1/image/upload',
+    CLOUDINARY_VIDEO_NAME: 'https://api.cloudinary.com/v1_1/dsdrqyeh1/video/upload',
     SIGN_UP_API: 'http://190.98.210.42/sos_click_api/public/api/auth/signup',
     SIGN_IN_API: 'http://190.98.210.42/sos_click_api/public/api/auth/login',
     USER_INFO_API: 'http://190.98.210.42/sos_click_api/public/api/auth/user',
@@ -12,6 +13,7 @@ const Constants = {
     LOAD_SECURITY_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/lista',
     REMOVE_NETWORK_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/eliminar',
     SEND_ALERT_API: 'http://190.98.210.42/sos_click_api/public/api/auth/seguridad/alerta',
+    SEND_COMPLAINT_API: 'http://190.98.210.42/sos_click_api/public/api/auth/denuncia/crear',
     SIGN_UP: 'SIGN_UP',
     SHOW_SPINNER: 'SHOW_SPINNER',
     HIDE_SPINNER: 'HIDE_SPINNER',
@@ -62,7 +64,9 @@ const Constants = {
     SEND_ALERT: 'SEND_ALERT',
     START_RECORD: 'START_RECORD',
     STOP_RECORD: 'STOP_RECORD',
-    SAVE_URI_VIDEO: 'SAVE_URI_VIDEO'
+    SAVE_URI_VIDEO: 'SAVE_URI_VIDEO',
+    SEND_COMPLAINT: 'SEND_COMPLAINT',
+    CLEAN_URI_VIDEO: 'CLEAN_URI_VIDEO'
 };
 
 export default Constants;

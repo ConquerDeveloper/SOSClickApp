@@ -19,6 +19,7 @@ import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.yuanzhou.vlc.ReactVlcPlayerPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import org.reactnative.camera.RNCameraPackage;
+import com.brentvatne.react.ReactVideoPackage;
 
 
 import java.util.Arrays;
@@ -47,7 +48,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseDatabasePackage(),
             new ReactVlcPlayerPackage(),
             new OrientationPackage(),
-            new RNCameraPackage()
+            new RNCameraPackage(),
+            new ReactVideoPackage()
       );
     }
 

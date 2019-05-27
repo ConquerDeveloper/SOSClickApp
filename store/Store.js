@@ -206,6 +206,8 @@ const saveUriReducer = (state = null, action) => {
     switch (action.type) {
         case Constants.SAVE_URI_VIDEO:
             return state = action.uri;
+        case Constants.CLEAN_URI_VIDEO:
+            return state = null;
         default:
             return state;
     }
