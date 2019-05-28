@@ -27,7 +27,9 @@ import {
     saveSecurityNetwork,
     addNewContactAction,
     cleanSelectedAction,
-    removeContactAction, cleanUriAction
+    removeContactAction,
+    cleanUriAction,
+    showDialogConfirmationAction
 } from "../Actions";
 import ImagePicker from 'react-native-image-crop-picker';
 import Contacts from "react-native-contacts";
@@ -654,19 +656,9 @@ function* sagaSendAlert() {
     yield put(spinnerAction(false));
 }
 
-const requestSendComplaint = async uri => {
-   /* const token = await AsyncStorage.getItem('token');
-    const response = await fetch(Constants.SEND_COMPLAINT_API, {
-        headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-
-        })
-    });*/
+const requestSendComplaint = async items => {
+    const uri = items[0];
+    const complaint = items[1];
     const token = await AsyncStorage.getItem('token');
     const split = uri.split('/');
     const fileName = [...split].pop();
@@ -695,26 +687,24 @@ const requestSendComplaint = async uri => {
         },
         method: 'POST',
         body: JSON.stringify({
-            url: cloudinaryResponse.secure_url
+            url: cloudinaryResponse.secure_url,
+            descripcion: complaint
         })
     });
     return Promise.all([{status: await responseComplaint.status, response: await responseComplaint.json()}])
 };
 
-function* sagaSendComplaint() {
+function* sagaSendComplaint(item) {
     yield put(spinnerAction(true));
     try {
+        const {complaint} = item;
         const uri = yield select(state => state.saveUriReducer);
-        const result = yield call(requestSendComplaint, uri);
+        const result = yield call(requestSendComplaint, [uri, complaint]);
         const {status} = result[0];
         switch (status) {
             case 200:
                 yield put(cleanUriAction());
-                Toast.show({
-                    text: 'Su denuncia ha sido enviada a nuestros centros de seguridad.',
-                    buttonText: 'OK',
-                    duration: 5000
-                });
+                yield put(showDialogConfirmationAction(true));
                 break;
         }
     } catch (e) {

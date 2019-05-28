@@ -184,6 +184,11 @@ export const cleanUriAction = () => ({
     type: Constants.CLEAN_URI_VIDEO
 });
 
-export const sendComplaintAction = () => ({
-    type: Constants.SEND_COMPLAINT
+export const sendComplaintAction = complaint => ({
+    type: Constants.SEND_COMPLAINT,
+    complaint
+});
+
+export const showDialogConfirmationAction = bool => ({
+    type: bool ? Constants.SHOW_DIALOG_CONFIRMATION : Constants.HIDE_DIALOG_CONFIRMATION
 });

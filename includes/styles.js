@@ -361,22 +361,26 @@ export const ComplaintStyles = StyleSheet.create({
         color: '#fff'
     },
     textArea: {
-        marginTop: 30,
+        marginTop: 10,
         fontFamily: 'UniSansRegular',
-        fontSize: 14
+        fontSize: 14,
+        backgroundColor: '#fff',
+        width: 310,
+        height: 105
     },
     sendButton: {
-        paddingHorizontal: 50,
+        width: 310,
         alignSelf: 'center',
         marginTop: 20,
-        backgroundColor: '#606A75',
-        paddingVertical: 10,
-        borderRadius: 8
+        backgroundColor: '#D0282E',
+        paddingVertical: 15,
+        borderRadius: 4
     },
     sendText: {
         color: '#fff',
         fontFamily: 'UniSansRegular',
-        fontSize: 14
+        fontSize: 16,
+        textAlign: 'center'
     },
     camera: {
         flex: 1,

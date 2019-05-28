@@ -136,7 +136,7 @@ const securityNetworkReducer = (state = [], action) => {
     }
 };
 
-const toggleDialogCameraReducer = (state = false, action)=> {
+const toggleDialogCameraReducer = (state = false, action) => {
     switch (action.type) {
         case Constants.SHOW_DIALOG_CAMERA:
             return state = true;
@@ -213,6 +213,17 @@ const saveUriReducer = (state = null, action) => {
     }
 };
 
+const toggleDialogConfirmationReducer = (state = false, action) => {
+    switch (action.type) {
+        case Constants.SHOW_DIALOG_CONFIRMATION:
+            return state = true;
+        case Constants.HIDE_DIALOG_CONFIRMATION:
+            return state = false;
+        default:
+            return state;
+    }
+};
+
 const reducers = combineReducers({
     spinnerReducer,
     isAuthenticatedReducer,
@@ -233,6 +244,7 @@ const reducers = combineReducers({
     toggleAlertDialogReducer,
     isRecordingReducer,
     saveUriReducer,
+    toggleDialogConfirmationReducer,
     form
 });
 

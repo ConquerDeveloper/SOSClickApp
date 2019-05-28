@@ -1,13 +1,17 @@
 import React from 'react';
 import ComplaintView from '../components/ComplaintView';
 import {connect} from 'react-redux';
-import {cleanUriAction, sendComplaintAction} from "../store/Actions";
+import {
+    cleanUriAction,
+    sendComplaintAction, showDialogConfirmationAction
+} from "../store/Actions";
 
 class Complaint extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            videoMessage: ''
+            videoMessage: '',
+            complaint: ''
         };
     }
 
@@ -29,13 +33,18 @@ class Complaint extends React.Component {
         const {
             navigation,
             userInfo,
-            spinner
+            spinner,
+            isDialogVisible
         } = this.props;
         return <ComplaintView navigation={navigation}
                               userInfo={userInfo}
                               spinner={spinner}
                               videoMessage={this.state.videoMessage}
-                              handleSendComplaint={this.props.handleSendComplaint}
+                              complaint={this.state.complaint}
+                              handleSendComplaint={() => this.props.handleSendComplaint(this.state.complaint)}
+                              handleTextChange={complaint => this.setState({complaint})}
+                              isDialogVisible={isDialogVisible}
+                              handleToggleDialogConfirmation={this.props.handleToggleDialogConfirmation}
         />;
     }
 
@@ -48,15 +57,19 @@ const mapDispatchToProps = dispatch => ({
     handleCleanUri: () => {
         dispatch(cleanUriAction());
     },
-    handleSendComplaint: () => {
-        dispatch(sendComplaintAction());
+    handleSendComplaint: complaint => {
+        dispatch(sendComplaintAction(complaint));
+    },
+    handleToggleDialogConfirmation: bool => {
+        dispatch(showDialogConfirmationAction(bool));
     }
 });
 
 const mapStateToProps = state => ({
     userInfo: state.userInfoReducer,
     uri: state.saveUriReducer,
-    spinner: state.spinnerReducer
+    spinner: state.spinnerReducer,
+    isDialogVisible: state.toggleDialogConfirmationReducer
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Complaint);
